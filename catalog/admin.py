@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-
+'''
 from .models import sound, emaillist, stem, live, livelarge, tourinput, contact, cameronbio, cameronworks, cameronlinks, dkhhome, dkhnews, dkhlinks, dkhlisten, dkhcontact, cameroncontact, cameronnews, cameronack, dkhabout
 
 admin.site.register(sound)
@@ -104,4 +104,5 @@ class EmailListAdmin(admin.ModelAdmin):
     fields = ['email', 'country']
 
 admin.site.register(emaillist, EmailListAdmin)
+'''
 

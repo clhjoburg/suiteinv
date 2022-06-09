@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import include
 from django.conf.urls import url
-from catalog import views as catalog_views
+#from catalog import views as catalog_views
 from django.contrib.auth.views import (
     LoginView,
     LogoutView,
