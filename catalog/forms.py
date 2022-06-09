@@ -2,11 +2,12 @@
 from django import forms
 
 # import GeeksModel from models.py
-from catalog.models import sound, stem, live, contact
+#from catalog.models import sound, stem, live, contact
 
 from django.forms import FileInput
 
 # create a ModelForm
+'''
 class Upload(forms.ModelForm):
 	# specify the name of model to use
 	class Meta:
@@ -39,3 +40,4 @@ class ContactUpload(forms.ModelForm):
 		model = contact
 		fields = "__all__"
 		
+'''

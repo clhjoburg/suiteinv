@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from catalog.models import sound, live, livelarge, stem, emaillist, contact, tourinput, cameronbio 
+#from catalog.models import sound, live, livelarge, stem, emaillist, contact, tourinput, cameronbio 
 from django_countries import countries
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
@@ -20,7 +20,7 @@ from hroom.settings import EMAIL_HOST_USER
 from django.core.mail import send_mail
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
-from catalog.forms import Upload, StemUpload, LiveUpload, ContactUpload
+#from catalog.forms import Upload, StemUpload, LiveUpload, ContactUpload
 from django.views.generic.edit import FormView
 from django.template import RequestContext
 import json
@@ -28,6 +28,7 @@ import boto3
 from django.conf import settings
 from django.http import JsonResponse
 
+'''
 class SignedURLView(generic.View):
     def post(self, request, *args, **kwargs):
         session = boto3.session.Session()
@@ -317,3 +318,4 @@ class camby(generic.ListView):
     model = cameronbio
     fields = '__all__'
     template_name = 'cameron.html'      
+    '''

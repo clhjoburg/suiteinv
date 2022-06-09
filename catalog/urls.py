@@ -10,6 +10,7 @@ from django.contrib.auth.views import (
     LogoutView,
 )
 
+'''
 
 urlpatterns = [
 	path('', views.index, name='index'),
@@ -39,5 +40,7 @@ urlpatterns = [
     path('signed-url/', views.SignedURLView.as_view(), name='signed-url'),
     path('live-upload-cont', views.LiveUploadViewTwo.as_view(), name='live-upload-cont'),               
     url(r'^signup/$', catalog_views.signup, name='signup'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+'''

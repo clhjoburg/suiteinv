@@ -11,7 +11,7 @@ from django.core.validators import FileExtensionValidator
 # Create your models here.
 
 User = settings.AUTH_USER_MODEL
-
+'''
 class sound(models.Model):
     user = models.ForeignKey(User, default = 1, on_delete = models.CASCADE)
     sound_file = models.FileField(validators=[
@@ -228,4 +228,6 @@ class dkhcontact(models.Model):
     created_on = models.DateTimeField(auto_now_add=True, null=True)
 
     def get_absolute_url(self): # new
-        return reverse('dkh-contact-success')                                                        
+        return reverse('dkh-contact-success')             
+
+'''
