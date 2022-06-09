@@ -1,0 +1,56 @@
+{% extends "base_generic.html" %}
+
+<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">   
+
+{% block content %}
+
+<style>
+.col-sm-10  {
+    top: 5em;
+    left: 20em;
+  }
+p { font-size: 12pt; }  
+
+#subButton {
+   position: relative;
+   top: -60px;
+   left: 450px;
+}
+
+@media screen and (max-width: 1578px) {
+   .col-sm-10  {
+    left: 30px;
+  }
+}  
+
+@media screen and (max-width: 1002px) {
+   .col-sm-10  {
+   top: 200px;
+   }
+}  
+
+@media screen and (max-width: 620px) {
+#subButton {
+   top: -80px;
+   left: -70px;
+   }
+}
+
+</style>
+
+<h1><em>Upload file</em></h1>
+
+<div class="container">
+<form action="#" method="POST" id="fileForm" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form.as_p }}
+    <button class="btn btn-primary btn-sm" id = "subButton" type="submit">Upload</button>
+    <!--<label for="name">Enter name: </label>
+    <input id="name" type="text" name="name" value="Default Filename.">
+    <input type="submit" value="OK">-->    
+
+</form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+  {% for document in object_list %}
+
+     <a href="{{ document.sound_file.url }}" download  class="btn btn-dark float-right">Download</a>
+    <p> {{ document.sound_file.name }} </p>
+    <p> Created on: {{ document.created_on}} </p>
+    <p> Last modified: {{ document.last_modified}} </p>    
+     
+  {% endfor %}
+
+  	<!--<audio
+        controls
+        src="/media/Bird.mp3">
+            Your browser does not support the
+            <code>audio</code> element.
+    </audio>-->
+  	<!--<audio
+        controls
+        src="/cameronharris/django_test/locallibrary/media/Bird.mp3">
+            Your browser does not support the
+            <code>audio</code> element.
+    </audio>-->
+
+    <div class="container">
+    {% for document in object_list %}
+        <audio controls id="player">
+            <source src="{{ document.sound_file.url }}">
+        </audio>
+    {% endfor %}
+</div>
+{% endblock %}

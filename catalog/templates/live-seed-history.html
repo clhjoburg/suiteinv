@@ -1,0 +1,452 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
+  {% load static %}
+  <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon" />  
+
+<style>
+
+#mainTitle { font-size: 22pt;
+    position: relative;
+    left: -50px; 
+    top: 40px;
+  }
+
+#mainTitle2 { font-size: 22pt;
+    position: relative;
+    left: 0px;
+    visibility: hidden; 
+  }  
+
+audio {
+      width: 240px;
+      position: relative;
+      top: 10px;}
+
+#ttitle {
+  width: 500px;
+  overflow-x: scroll;
+  white-space: nowrap;
+  overflow-y: hidden;
+}
+#downloadbutton {
+      position: relative;
+      top: 85px;
+      float: left;
+}      
+
+#comments-button {
+      color: white;
+      background-color: transparent; 
+      width:167px;
+      height:38px;
+      position: relative;
+      top: -38px;
+      left: 700px;
+      font-size: 12pt;
+      z-index: 3;
+      border: none;
+      -webkit-box-shadow: 3px 3px 20px #919191;
+      box-shadow: 3px 3px 20px #919191;
+      border-radius: 5%;
+      outline: none;
+      }
+
+#compare {
+      color: white;
+      background-color: transparent; 
+      width:167px;
+      height:38px;
+      position: relative;
+      top: -38px;
+      left: 210px;
+      font-size: 12pt;
+      z-index: 3;
+      border: none;
+      -webkit-box-shadow: 3px 3px 20px #919191;
+      box-shadow: 3px 3px 20px #919191;
+      border-radius: 5%;
+      outline: none;
+      padding: 9.5px;
+}  
+
+.new-comments {
+      width: 335px;
+      height: 110px;
+      padding: 5px;
+      overflow: hidden;
+      font-size: 10pt;
+      -webkit-box-shadow: 3px 3px 20px #919191;
+      box-shadow: 3px 3px 20px #919191;
+      position: relative;
+      top:  -40px;
+      left: 200px;  
+}  
+
+.comments-text {
+      visibility: hidden;
+}       
+
+#columns {
+  position: relative;
+  left: -130px;
+  }
+
+p {
+  color: rgb(0, 138, 230);
+  text-shadow: 2px 2px black;
+}
+
+h2 {
+  color: rgb(191, 167, 204);
+  text-shadow: 2px 2px black;
+}
+
+#blackbackground {
+  background-color: rgba(38, 38, 38, 0.5);
+  /*background-color: rgba(14, 19, 71, 0.4);*/
+  position: absolute;
+  left: -180px;
+  height: 100%;
+  width: 85vw;
+  z-index: -1;
+  visibility: hidden;
+}
+  #uploadbutton {
+    position: absolute;
+    top: 83px;
+    left: 900px;
+    height: 39px;
+    width: 170px;
+    padding-top: 7px;
+  }
+
+
+.btn {
+    background-color: transparent;
+    -moz-box-shadow: 3px 3px 20px #919191;
+    -webkit-box-shadow: 3px 3px 20px #919191;
+    box-shadow: 3px 3px 20px #919191;
+    margin-right: 10px;
+}
+ .col-sm-10  {
+    top: 5em;
+    left: 20em;
+  }
+
+h1 {left: 50vw;}
+
+.pagination {
+  position: absolute;
+  top: 110px;
+  right: 77px;
+  color: gray;
+  z-index: 3;
+ } 
+
+@media screen and (max-width: 1560px) {
+  .new-comments {
+      width: 300px;
+    }
+
+  #downloadbutton {
+      position: relative;
+      top: 10px;
+    }    
+}
+
+@media screen and (max-width: 1440px) {
+    .new-comments {
+      width: 355px;
+      left: 0;
+      top: -8px;
+      height: 100px;
+    }
+    audio {
+      top: 0px;
+    }
+
+        #ttitle {
+      width: 340px;
+    }
+
+      #downloadbutton {
+      top: 70px;
+    } 
+#mainTitle {
+  visibility: hidden;
+  }
+#mainTitle2 {
+  visibility: visible;
+  }
+
+}
+
+@media screen and (max-width: 1051px) {
+#uploadbutton {
+  position: relative;
+  left: -150px;
+  }
+
+#comments-button {
+  position: relative;
+      top: -60px;
+      left: 477px;
+      }
+
+#compare {
+  top: -10px;
+  left: 173px;
+  } 
+
+}
+
+@media screen and (max-width: 90em) {
+
+#columns {
+  position: relative;
+  left: -10px;
+  }
+
+ .col-sm-10  {
+    left: 10px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+.col-sm-10  {
+    top: 200px;    
+} 
+
+h1 {font-size: 24pt;}
+#ttitle {font-size: 16pt;} 
+#columns {
+    columns: 1;
+    -webkit-columns: 1;
+    -moz-columns: 1;
+}
+
+.pagination {
+  position: absolute;
+  top: 183px;
+  right: 20px;
+}
+
+#compare {
+  top: -5px;
+  left: 95px;
+} 
+
+#uploadbutton {
+  position: absolute;
+  top: -48px;
+  left: -50px;
+  z-index: 4;
+  } 
+
+#uploadbutton {
+  border: none;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  color: gray;
+  }  
+
+  #comments-button {
+      top: -48px;
+      left: 400px;
+      }
+
+  #ttitle {
+      width: 600px;
+    }
+
+}
+
+
+
+
+@media screen and (max-width: 800px) {
+
+
+  #uploadbutton {
+  position: absolute;
+  top: -48px;
+  z-index: 4;
+  } 
+  body {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 1738px;
+  }
+  #blackbackground {
+  display: none;
+  }
+
+  #comments-button {
+      top: -7px;
+      left: 5px;
+      }
+
+    #ttitle {
+      width: 340px;
+    }  
+
+}
+ @media screen and (max-width: 655px) {
+
+    #compare {
+  top: -7px;
+  left: 10px;
+  font-size: 10pt;
+  padding-top: 10.5px;
+  padding-bottom: 10.5px;
+  } 
+
+#uploadbutton {
+  left: -20px;
+}  
+}
+
+ @media screen and (max-width: 508px) {
+#compare {
+  top: -150px;
+  left: -165px;
+  font-size: 8pt;
+}
+ }
+
+ @media screen and (max-width: 400px) {
+
+#compare {
+  position: absolute;
+  top: 0px;
+  left: 20px;
+  font-size: 8pt;
+}
+
+  .btn {
+    margin-right: 0px;
+      font-size: 10pt;
+  }
+
+
+  #uploadbutton {
+  }
+
+    #ttitle {
+      width: 260px;
+    }  
+
+  #nc {
+    width: 255px;
+  } 
+
+#downloadbutton {
+  top: 10px;
+}
+}
+
+
+#home {
+  text-shadow: none;
+}
+
+#ableton {
+    text-shadow:
+    0 0 4px rgba(202,228,225,0.98),
+    0 0 2px rgba(202,228,225,0.42),
+    0 0 2px rgba(30,132,242,0.58),
+    0 0 2px rgba(30,132,242,0.84),
+    0 0 2px rgba(30,132,242,0.88),
+    0 0 2px rgba(30,132,242,1);
+}  
+
+#nameTrunc {
+  white-space: nowrap;
+  width: 150px;
+  height: 30px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+
+
+#entryContainer {
+    -webkit-box-shadow: 3px 3px 20px #919191;
+      box-shadow: 3px 3px 20px #919191;
+      background-color: rgba(38, 38, 38, 0.5);
+      padding: 5px;
+}
+
+</style>
+</head>
+
+<h1 id="mainTitle">Suite Inversée II Sarab&03 Evolution</h1>
+  <h1 id="mainTitle2">Suite Inversée II  <br>Sarab&03 Evolution</h1>
+<button id="comments-button" onclick="displayComments()">View Comments</button>
+<a id = 'compare' href="{% url 'live-compare-two' %}">Compare most recent with original seed</a>    
+<div id="blackbackground">
+</div>     
+    <div class="container" id="columns">
+      {% for document in object_list%}
+      <div class="entry" id= "entryContainer">
+      <h2 id = 'ttitle'> {{ document.live_render.name }} </h2>
+      <p> Created on: {{ document.created_on}} </p>
+      <div id = "nameTrunc">
+      <p> Created by: {{ document.user }} </p>
+    </div>
+      <div id="nc" class = "new-comments"> 
+      <audio controls class="thisAudio" id="player">
+        <source src="{{ document.live_render.url }}">
+      </audio>
+      {% if user.is_authenticated %}
+      <a id = 'downloadbutton' class = 'dwnld-button' href="{{ document.live_render.url }}" download >Download</a>
+      {% endif %}
+       <p class = "comments-text"> Comments: {{ document.comments }}</p>
+          </div> 
+      </div>  
+    {% endfor %}
+  </div>
+ 
+    {% if user.is_authenticated %}
+  <a id = 'uploadbutton'href="{% url 'live-upload' %}" class="btn btn-dark float-left"> Upload your version</a>
+    {% endif %}
+
+<script> 
+  /*var commentbox = document.getElementById('comments');*/
+var commentToggle = true;
+var audioVar = document.getElementsByClassName("thisAudio");
+var boxy = $('.new-comments');
+function displayComments() {  
+  if (commentToggle) {
+      $('.comments-text').css('visibility','visible');
+      $('.thisAudio').css('display','none');
+      $('.dwnld-button').css('display','none');
+      $('.new-comments').css('overflow','scroll');
+      document.getElementById('comments-button').innerHTML = "Hide Comments";
+      commentToggle = false;
+  } else {
+    $('.new-comments').scrollTop(0);
+    $('.comments-text').css('visibility','hidden');
+    $('.thisAudio').css('display','inline');
+     $('.dwnld-button').css('display','inline');
+     $('.new-comments').css('overflow','hidden');
+    document.getElementById('comments-button').innerHTML = "View Comments";
+    commentToggle = true;
+  }
+} 
+
+var entryCount = $(".entry");
+var audioCount = document.getElementsByClassName("thisAudio").length;
+console.log(audioCount);
+if (audioCount < 6) {
+document.getElementById("columns").style.columns = "1";
+$(".entry").height("200px")
+}    
+
+</script>    
+{% endblock %}

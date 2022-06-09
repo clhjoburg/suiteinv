@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1>The Most Recent Evolution</h1>
+
+  <!-- removed the loop, change context name to object_list -->
+<p> {{ object_list.sound_file.name }} </p>
+<p> Created on: {{ object_list.created_on}} </p>
+<p> Last modified: {{ object_list.last_modified}} </p>    
+<audio controls id="player"><source src="{{ object_list.sound_file.url }}"></audio>
+<div>
+	<a href="{{ object_list.sound_file.url }}" download  class="btn btn-dark float-left">Download</a>	
+</div>  
+ <div>  
+   <a href="../upload" class="btn btn-dark float-left"> Upload your version</a>
+ </div>
+
+{% endblock %}

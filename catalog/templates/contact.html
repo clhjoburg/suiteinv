@@ -1,0 +1,128 @@
+{% extends "baseFive.html" %}
+
+{% block content %}
+
+<style>
+
+#home {
+  	text-shadow: none;
+}
+
+#contact {    
+	text-shadow:
+    0 0 4px rgba(202,228,225,0.98),
+    0 0 2px rgba(202,228,225,0.42),
+    0 0 2px rgba(30,132,242,0.58),
+    0 0 2px rgba(30,132,242,0.84),
+    0 0 2px rgba(30,132,242,0.88),
+    0 0 2px rgba(30,132,242,1);
+}
+
+body {
+  font-family: 'Helvetica neue', Helvetica, Arial, sans-serif; 
+  background-position: absolute;
+  background-repeat: repeat;
+  background-size: cover;
+    overflow-x: hidden;
+  color: white;
+      }
+
+h1 {
+    font-size: 38pt;
+}
+
+p {
+    font-size: 16pt;
+}
+ .col-sm-10  {
+    top: 5em;
+    left: 20em;
+  }
+
+.container {
+    position: relative;
+    left: -300px;
+}
+
+#title_container {
+    position: relative;
+    left: -300px;
+}
+
+#greyband {
+    background-color: rgba(0, 0, 0, 0.2);
+    width: 103vw;
+    position: absolute;
+    left: -370px;
+    padding-top: 5px;
+    padding-left: 60px;
+}
+
+@media screen and (max-width: 1000px) {
+
+body {
+    position: fixed;
+    overflow-x: hidden;
+
+}
+
+#navbar {
+    top: -30px;
+}
+   .col-sm-10  {
+    top: 180px;
+    left: 320px;
+  }
+  p {
+    font-size: 10pt;
+  }
+
+  #greyband {
+    left: -355px;
+  }
+#butt {
+position: relative;    
+left: 100px;
+    }
+
+body {
+background-size: 150vh;
+    }
+}
+
+@media screen and (max-height: 640px) {
+
+#butt {
+top: -265px;
+left: 210px;
+    }
+}    
+
+</style>
+
+<div id="title_container">
+<h1><em>Contact</em></h1>
+
+<p> Please use the form below: </p>
+</div>
+
+<div class="container">
+<form action="#" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form.as_p }}
+    <button class="btn btn-primary btn-sm" id = "butt" type="submit">Upload</button>
+    <!--<label for="name">Enter name: </label>
+    <input id="name" type="text" name="name" value="Default Filename.">
+    <input type="submit" value="OK">-->    
+
+</form>
+</div>
+<br>
+<br>
+<br>
+<div id="greyband">
+<p> The Headroom Project, Johannesburg</p>
+<p> headroommusicproject@gmail.com </p>
+</div>
+{% endblock %}

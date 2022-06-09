@@ -1,0 +1,653 @@
+{% extends "base_generic.html" %}
+  
+
+{% block content %}
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+{% load static %}    
+<style>
+
+#safariBox{
+visibility: hidden;
+position: fixed;
+top: 0;
+left: 0;
+width: 100vw;
+height: 100vh;
+background-color: rgba(0, 0, 0, 0.7);
+z-index: 6;
+text-align: center;
+}
+
+#safariText {
+  position: relative;
+  top: 40%;
+}
+
+#safariSecondText {
+  position: relative;
+  top: 60%;
+  font-size: 18pt;
+}
+
+	.col-sm-10  {
+    position: relative;
+    top: 7em;
+    left: 20em;
+    }
+
+#headTitle {
+  position: absolute;
+  top:  -50px;
+  left: 200px;
+  font-size: 56px;
+  transition: 3s opacity;
+}
+
+#enterText {
+  position: absolute;
+  top:  130px;
+  left: 600px;
+  font-size: 56px;
+  opacity: 0;
+  transition: 3s opacity;
+}
+
+  #myVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  top: -50px;
+  min-width: 100%;
+  min-height: 110%;
+  }
+
+.index-text {
+  position: absolute;
+  left: 800px;
+  z-index: 3;
+  }
+
+#navbar {
+  opacity: 0;
+  transition: 3s opacity;
+  visibility: hidden;
+  }
+
+.fades {
+        height: 100px;
+        width: 700px;
+        font-size: 20pt;    
+        position: absolute;
+        top: 150px;
+        left:  680px;    
+        opacity: 0;
+        transition: 3s opacity;
+        text-align: center;
+  }    
+
+#skipButton {
+  background: transparent;
+  color: white;
+  border-radius: 5%;
+  border-style: solid;
+  border-width: 2px;
+  border-color: darkgray;
+  font-size: 18pt;
+  z-index: 3;
+  position: absolute;
+  top: 450px;
+  left: 1250px;
+  opacity: 1;
+  transition: 3s opacity;
+  font-style: italic;
+}
+
+#tourButton {
+  background: transparent;
+  color: white;
+  border-radius: 5%;
+  border-style: solid;
+  border-width: 2px;
+  border-color: darkgray;
+  font-size: 18pt;
+  z-index: 3;
+  position: absolute;
+  top: 310px;
+  left: 600px;
+  opacity: 0;
+  transition: 3s opacity;
+  font-style: italic;
+  padding-left: 5px;
+  padding-right: 5px;
+} 
+
+
+#textButton {
+  background: transparent;
+  color: white;
+  border-radius: 5%;
+  border-style: solid;
+  border-width: 2px;
+  border-color: darkgray;
+  font-size: 18pt;
+  z-index: 3;
+  position: absolute;
+  top: 260px;
+  left: 600px;
+  opacity: 0;
+  transition: 3s opacity;
+} 
+
+#subscribeButton {
+  /*background: transparent;*/
+  color: white;
+  /*border-radius: 5%;
+  border-style: solid;
+  border-width: 2px;
+  border-color: darkgray;*/
+  font-size: 18pt;
+  font-style: italic;
+  z-index: 3;
+  position: absolute;
+  top: 265px;
+  left: 710px;
+  opacity: 0;
+  transition: 3s opacity;
+}  
+
+
+
+#closeButton {
+  color: white;
+  font-size: 18pt;
+  /*position: relative;
+  left: ;
+  top: ;*/
+  background: transparent;
+  float: right;
+}
+
+#subtext {
+  font-size: 20pt;
+}
+
+#subscribeAnchor {
+  color: goldenrod;
+}
+
+#textHeading {
+  font-style: ;
+}
+
+{% if user.is_authenticated %}
+#subscribeButton {visibility: hidden;}
+{% else %}
+#subscribeButton {visibility: visible;}
+{% endif %} 
+
+{% if user.is_authenticated %}
+#navbar {
+  opacity: 1;
+  visibility: visible;
+  }
+{% endif %} 
+/*-----------------MEDIA SCREEN 1760PX ---------------------*/
+@media only screen
+and (max-width: 1760px) {
+   #textButton, #subscribeButton {
+    position: absolute;
+    top: 350px;
+  }
+
+  #skipButton {
+    top: 450px;
+    width:  150px;
+  }
+
+  #tourButton {
+  top:  400px;
+  }
+
+    #bigContainer {
+    position: relative;
+    right: 200px;
+  }
+}
+
+/*-----------------MEDIA SCREEN 1530PX ---------------------*/
+@media only screen
+and (max-width: 1530px) {
+  #bigContainer {
+    position: relative;
+    right: 400px;
+    text-shadow: 2px 2px 4px #000000;
+    }
+  #skipButton, #textButton, #tourButton  {
+    text-shadow: 2px 2px 4px #000000;
+    box-shadow: 2px 2px 4px #000000;
+    }
+}
+
+/*-----------------MEDIA SCREEN 1450PX ---------------------*/
+@media only screen
+and (max-width: 1450px) {
+    #skipButton, #textButton, #subscribeButton {
+    position: absolute;
+    top: 430px;
+  }
+
+  #tourButton {
+  top:  480px;
+  }
+
+  #headTitle {
+    width: 860px;
+  }
+}
+
+/*-----------------MEDIA SCREEN 1362PX ---------------------*/
+@media only screen
+and (max-width: 1362px) {
+  #bigContainer {
+    position: relative;
+    right: 700px;
+  }
+  #headTitle {
+    position: relative;
+    left: 400px;
+  }
+}
+
+/*-----------------MEDIA SCREEN 1242PX ---------------------*/
+@media only screen
+and (max-width: 1242px) {
+#textButton, #subscribeButton {
+    position: absolute;
+    top: 480px;
+  }
+#subscribeButton {
+  width: 350px;
+}
+  #tourButton {
+  top:  530px;
+  width: 150px;
+  }
+}
+
+/*-----------------MEDIA SCREEN 1048PX ---------------------*/
+@media only screen
+and (max-width: 1048px) {
+
+  body {
+    position: fixed;
+    overflow: hidden;
+  }
+  #bigContainer {
+    position: relative;
+    right: 900px;
+  }
+  #headTitle {
+    position: relative;
+    left: 630px;
+  }
+
+  #enterText {
+    top: 100px;
+left: 650px;
+  }
+
+  #subscribeButton {
+  left: 760px;
+}
+  #textButton, #tourButton {
+  left: 650px;
+  }
+
+  #navbar {
+    top: -30px;
+  }
+
+  #textButton {
+    width: 100px;
+  }
+}
+
+/*-----------------MEDIA SCREEN 928PX ---------------------*/
+@media only screen
+and (max-width: 928px) {
+  #bigContainer {
+    position: relative;
+    right: 900px;
+  }
+  #headTitle {
+    position: relative;
+    left: 630px;
+    width: 750px;
+  }
+}
+
+/*-----------------MEDIA SCREEN 824PX ---------------------*/
+@media only screen
+and (max-width: 824px) {
+  #bigContainer {
+    position: relative;
+    right: 1000px;
+  }
+  #headTitle {
+    position: relative;
+    left: 730px;
+    width: 750px;
+  }
+  .fades {
+    left: 730px;
+  }
+  #enterText {
+    position: relative;
+    left: 700px;
+    top: 0px;
+  }
+  #textButton, #tourButton {
+    left: 700px;
+  }
+  #subscribeButton {
+    left: 810px;
+  }
+}
+
+/*-----------------MEDIA SCREEN 760PX ---------------------*/
+@media only screen
+and (max-width: 760px) {
+  #bigContainer {
+    position: relative;
+    right: 1000px;
+  }
+  #headTitle {
+    position: relative;
+    left: 730px;
+    width: 750px;
+  }
+  #skipButton {
+    position: fixed;
+    left: 30px;
+    top: 
+    230px;
+  }
+}
+
+/*-----------------MEDIA SCREEN 734PX ---------------------*/
+@media only screen
+and (max-width: 734px) {
+
+  #headTitle {
+    font-size: 20pt;
+    }
+
+  #fade-container {
+    position: relative;
+    left: 30px;
+    top: -200px;
+  }  
+  .fades {
+    font-size: 16pt;
+    width:  400px;
+    white-space: pre-wrap;
+    top: 0;
+    }  
+
+  #enterText {
+    position: relative;
+    top: 100px;
+    }
+  }
+
+/*-----------------MEDIA SCREEN 446PX ---------------------*/
+@media only screen
+and (max-width: 446px) {
+  #headTitle {
+    width: 300px;
+    white-space: pre-wrap;
+    }
+  .fades {
+    width:  300px;
+    white-space: pre-wrap;
+    text-align: left;
+    top: -120px;
+    left: 705px;
+    }  
+}
+
+/*-----------------MEDIA SCREEN 375PX ---------------------*/
+@media only screen
+and (max-width: 375px) {
+  #enterText {
+    top: 20px;
+    }
+      .fades {
+    top: -120px;
+    left: 705px;
+    }  
+
+  #skipButton {
+    top: 30px;
+  }  
+  #textButton, #subscribeButton {
+    top: 430px;
+  }
+
+  #tourButton {
+  top:  480px;
+  }
+}
+
+@media only screen
+and (max-height: 640px) {
+  #tourButton {
+    left: 800px;
+    top: 470px;
+  }
+}
+
+@media only screen
+and (max-height: 740px) {
+  #tourButton, #subscribeButton, #textButton {
+z-index: 0;
+  }
+}
+
+
+</style>  
+
+<div id="safariBox">
+  <div id="safariText">
+    <h1> Sorry, Safari is not supported!</h1>
+    <br>
+    <br>
+    <h2> Please return on Firefox, Chrome or Microsoft Edge to enter</h2>
+  </div>
+  <div id=safariSecondText>  
+    <a href="https://www.mozilla.org/en-US/firefox/new/">Download Firefox</a>
+  </div> 
+</div>
+
+{% load static %}
+<video autoplay muted loop id="myVideo">
+
+  <source src="{% static 'css/images/dandRain.mp4' %}" type="video/mp4">
+</video>
+
+<div id="bigContainer">
+<h1 id="headTitle">Welcome to the Headroom Project: Suite inversée evolution</h1>
+<div id="enterText">
+  <p>Enter Suite inversée</p>
+  <p id="subtext">Please see the top menu for access to the music.<p> 
+</div>
+<!--  <p> You have visited this page {{ num_visits }} time{% if num_visits > 1 %}s{% endif %}.</p>-->
+
+<button id="skipButton" onclick="makeItGoAway()">Skip Intro</button>
+<button id="textButton" onclick="viewText()">Re-read</button>
+<a id="tourButton" href="{% url 'tour' %}">Take a tour</a>
+<a id="subscribeButton" href="{% url 'subscribe'%}">Create an account</a>
+<div id="fade-container">
+    <p class = "fades" id = "para1">The Headroom Project is a new take on creating music collaboratively: Musical seeds are planted in the system and all are welcome to grow these seeds by evolving the music seed further.</p>
+
+    <p class = "fades" id = "para2">You can hear the origins of the music by looking back though its earlier evolutions right to the initial seed. You can then visit the most recent evolution of the music that has been uploaded, download it, turn it into something new or make it more of what it already is and then upload it as the newest growth on this musical tree.</p>
+
+    <p class = "fades" id = "para3">This is a special version of the site dedicated to <em>Suite inversée</em>, a collaboration between Cameron Harris and Jonathan crossley</p> 
+
+    <p class = "fades" id = "para4">Please see the top menu for access to the music. Thank you and enjoy!<p>
+</div>
+</div>
+
+<div id="textBox">
+    <button id="closeButton" onclick="closeText()">X</button>
+    <h1 id="textHeading"><b>Welcome to the Headroom Project</b></h1>
+    <br>  
+    <p class = "retext" id = "retext">The Headroom Project is a new take on creating music collaboratively: Musical seeds are planted in the system and all are welcome to grow these seeds by evolving the music seed further.</p>
+
+    <p class = "retext" id = "retext">You can hear the origins of the music by looking back though its earlier evolutions right to the initial seed. You can then visit the most recent evolution of the music that has been uploaded, download it, turn it into something new or make it more of what it already is and then upload it as the newest growth on this musical tree.</p>
+
+    <p class = "retext" id = "retext">This is a special version of the site dedicated to <em>Suite inversée</em>, a collaboration between Cameron Harris and Jonathan crossley</p>
+</div>
+
+<script>
+var e = document.getElementById("myVideo");
+e.style.opacity = 0;
+
+var video = document.getElementById("myVideo");
+video.oncanplaythrough = function() {
+    setTimeout(function() {
+        var e = document.getElementById('myVideo');
+        fade(e);
+    }, 5000);
+};
+
+function fade(element) {
+    var op = 0;
+    var timer = setInterval(function() {
+        if (op >= 1) clearInterval(timer);
+        element.style.opacity = op;
+        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+        op += op * 0.1 || 0.1;
+    }, 50);
+}
+
+video.playbackRate = 0.35; 
+
+var fade1 = document.getElementById("para1");
+var fade2 = document.getElementById("para2");   
+var fade3 = document.getElementById("para3");
+var fade4 = document.getElementById("para4");   
+var nav = document.getElementById("navbar");
+var enterBox = document.getElementById("enterText");
+var initTitle = document.getElementById("headTitle");
+var skip = document.getElementById("skipButton");
+var text = document.getElementById("textButton");
+var textDiv = document.getElementById("textBox"); 
+var closeDiv = document.getElementById("closeButton");
+var sub = document.getElementById("subscribeButton");
+var tour = document.getElementById("tourButton");
+var saffy = document.getElementById("safariBox");          
+
+
+
+var isSafari = window.safari !== undefined;
+if (isSafari) safariOut();
+
+function safariOut() {
+  saffy.style.visibility = 'visible';
+}   
+
+window.onload = function() {
+  window.setTimeout(fadeInOne, 1000);
+  window.setTimeout(fadeOutOne, 12000);
+  window.setTimeout(fadeInTwo, 12000);
+  window.setTimeout(fadeOutTwo, 32000);
+  window.setTimeout(fadeInThree, 32000);
+  window.setTimeout(fadeOutThree, 54000);
+  window.setTimeout(fadeInFour, 54000);
+  window.setTimeout(fadeOutFour, 61000);
+  window.setTimeout(fadeInFour, 61000);
+  window.setTimeout(fadeOutFour, 68000);
+  window.setTimeout(enterAfterTwelve, 68000);
+}
+
+function fadeInOne() {
+  fade1.style.opacity = '1';
+  skipButton.style.opacity = '1';
+}
+function fadeOutOne() {
+  fade1.style.opacity = '0';
+}        
+
+function fadeInTwo() {
+  fade2.style.opacity = '1';
+}
+function fadeOutTwo() {
+  fade2.style.opacity = '0';
+}
+
+function fadeInThree() {
+  fade3.style.opacity = '1';
+}
+function fadeOutThree() {
+  fade3.style.opacity = '0';
+}     
+
+function fadeInThreeA() {
+  fade3a.style.opacity = '1';
+}
+function fadeOutThreeA() {
+  fade3a.style.opacity = '0';
+}  
+function fadeInFour() {
+  fade4.style.opacity = '1';
+}
+function fadeOutFour() {
+  fade4.style.opacity = '0';
+}   
+
+function enterAfterTwelve() {
+  text.style.opacity = '1';
+  enterBox.style.opacity = '1';
+  initTitle.style.opacity = '0';
+  skip.style.opacity = '0';
+  sub.style.opacity = '1';
+  tour.style.opacity = '0';
+  navbar.style.visibility = 'visible';
+  navbar.style.opacity = '1';
+}
+
+function makeItGoAway() {
+  skip.style.opacity = '0';
+  skip.style.visibility = 'hidden';
+  navbar.style.visibility = 'visible';
+  navbar.style.opacity = '1';
+  $('.fades').css('display','none');
+  enterBox.style.opacity = '1';
+  text.innerHTML ="Read";
+  text.style.opacity = '1';
+  sub.style.opacity = '1';
+  tour.style.opacity = '1';
+  initTitle.style.opacity = '0';
+
+}
+
+function viewText() {
+  textDiv.style.visibility = 'visible';
+  closeDiv.style.visibility = 'visible';
+  text.style.visibility = 'hidden';
+}
+
+function closeText() {
+  textDiv.style.visibility = 'hidden';
+  closeDiv.style.visibility = 'hidden';
+  text.style.visibility = 'visible';  
+}
+
+</script>
+{% endblock %}
+
+
+
+

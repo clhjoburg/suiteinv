@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+         <title>Sign up for Headroom Project notifications</title>
+           {% load static %}
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <link rel="stylesheet" href="{% static 'css/stylestwo.css' %}">
+
+<style>
+ .col-sm-10  {
+    top: 6em;
+    left: 1000px;
+  }
+body {
+  background-image: ;
+height: 100vh;
+}
+  
+  input {
+  background: transparent;
+  color: white;
+  border-radius: 5%;
+  border-style: solid;
+  border-width: 2px;
+  border-color: darkgray;
+  font-size: 11pt;
+  padding-left: 5px;
+  padding-right:  5px;
+}  
+
+ select {
+  background: transparent;
+  color: white;
+  border-radius: 5%;
+  border-style: solid;
+  border-width: 2px;
+  border-color: darkgray;
+  font-size: 11pt;
+}  
+
+ button {
+  background: transparent;
+  color: white;
+  border-radius: 5%;
+  border-style: solid;
+  border-width: 2px;
+  border-color: darkgray;
+  font-size: 16pt;
+  font-style: italic;
+  padding-left: 5px;
+  padding-right:  5px;
+}  
+</style>
+<h1>The Headroom Project</h1>
+  <h2>Create an account 1/2</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Sign up</button>
+  </form>
+  

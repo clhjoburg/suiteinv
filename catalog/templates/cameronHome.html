@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<head>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+  {% load static %}
+  <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon" />  
+
+</head>
+
+  <h1>Cameron</h1>
+      <p> Bio: {{ object_list.bio }} </p>
+      <p> Aside One: {{ object_list.asideOne }} </p>
+      <p> Aside Two: {{ object_list.asideTwo }} </p>
+
+{% endblock %}

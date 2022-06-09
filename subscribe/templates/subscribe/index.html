@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+         <title>Sign up for Headroom Project notifications</title>
+           {% load static %}
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <link rel="stylesheet" href="{% static 'css/stylestwo.css' %}">
+        <style>
+.col-sm-10  {
+    top: 5em;
+    left: 1000px;
+  }
+
+  input {
+  background: transparent;
+  color: white;
+  border-radius: 5%;
+  border-style: solid;
+  border-width: 2px;
+  border-color: darkgray;
+  font-size: 11pt;
+  padding-left: 5px;
+  padding-right:  5px;
+}  
+
+ select {
+  background: transparent;
+  color: white;
+  border-radius: 5%;
+  border-style: solid;
+  border-width: 2px;
+  border-color: darkgray;
+  font-size: 11pt;
+}  
+
+ #sub-butt {
+  background: transparent;
+  color: white;
+  border-radius: 5%;
+  border-style: solid;
+  border-width: 2px;
+  border-color: darkgray;
+  font-size: 16pt;
+  font-style: italic;
+  padding-left: 5px;
+  padding-right:  5px;
+}  
+
+body {
+  background-size: 100vw 100vh;
+      }
+
+    </style>     
+
+</head>
+<body>
+       <h1>The Headroom Project</h1>
+        <h2>Create an account 2/2</h2>
+     
+    <p class = "subhead"> Please provide your email address to receive notifications when a new evolution is uploaded</p>
+    <p> Please consider using a personal email adress, such as a Gmail address, as work email systems often block system-generated emails. </p>
+    <form method="POST">
+        <!-- Very Important csrf Token -->
+        {% csrf_token %}
+        <div class = "form-group">
+            <p>
+            <h3>{{ form.as_p }}</h3>
+        </p>
+            <br>
+            <input id="sub-butt" type="submit" name="Subscribe" value="Submit" class = 'btn btn-primary btn-lg'>
+                </div>
+            </form>
+                <div class = "backing"> </div>
+</body>
+</html>

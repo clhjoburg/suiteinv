@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <title>Most recent evolution</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+ 
+    <style>
+      body {
+        font-family: 'Helvetica neue', Helvetica, Arial, sans-serif;
+      }
+
+ .wrapper {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0,1fr));
+  gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+}
+/*.audio {
+  grid-column-start: 1;
+}*/
+/*#audio {
+  grid-column-start: 1;
+  grid-row: 1;
+}*/
+.three {
+  grid-column: 1;
+  grid-row: 2 / 5;
+}
+.four {
+  grid-column: 3;
+  grid-row: 3;
+}
+.five {
+  grid-column: 2;
+  grid-row: 4;
+}
+.six {
+  grid-column: 3;
+  grid-row: 4;
+}
+
+
+      #titles {
+        margin: 24px auto;
+        width: 1000px;
+      }
+
+     .wfcont {
+        margin: 24px auto;
+        width: 1000px;
+        background-color: rgba(39, 66, 97, 0.7);
+      }
+
+     .zvcont, .ovcont {
+        margin: 0 0 24px 0;
+        line-height: 0;
+        -moz-box-shadow: 3px 3px 20px #919191;
+        -webkit-box-shadow: 3px 3px 20px #919191;
+        box-shadow: 3px 3px 20px #919191;
+        /*background-color: rgba(39, 66, 97, 1);*/
+        background-color: white;
+      }
+
+      .zvcont {
+        height: 200px;
+      }
+
+      .ovcont {
+        height: 85px;
+      }
+
+      .dcontrols {
+        margin: 0 auto 24px auto;
+        width: 1000px;
+        display: flex;
+        align-items: center;
+      }
+
+      .dcontrols button {
+        background: #fff;
+        border: 1px solid #919191;
+        cursor: pointer;
+      }
+
+      #audio {
+        flex: 0 0 30%;
+        grid-column-start: 1;
+        grid-row: 1;
+      }
+
+      .ctrls {
+        flex: 1;
+        margin-left: 1em;
+      }
+
+    .st {
+        width: 4em;
+      }
+      #downloadloadbutton {
+        margin-left: 1em;
+      }
+
+      #uploadbutton {
+        margin-left: 1em;
+      }
+
+      #offtoright {
+        position: absolute;
+  		right: 64em;
+      }
+      .log {
+        margin: 0 auto 24px auto;
+        width: 1000px;
+      }
+
+      table {
+        width: 100%;
+      }
+
+      table th {
+        text-align: left;
+      }
+
+      table th, table td {
+        padding: 0.5em;
+      }
+
+      .hide {
+        display: none;
+      }
+
+      .fnamey {
+        grid-column: 1/2;
+        grid-row: 1/2;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div id="titles">
+      <h1>The Most Recent Evolution</h1>
+      <p> Created on: {{ object_list.created_on}} </p>
+      <p> Created by: {{ object_list.user }} </p>
+      <p> Comments: {{ object_list.comments }}</p>
+    </div>
+
+
+<div class = wrapper>
+    <div class = "wfcont" id="waveform-container">
+      <!--<div class = "zwcont" id="zoomview-container"></div>-->
+      <div class = "ovcont" id="overview-container"></div>
+    </div>
+
+    <div class = "dcontrols" id="demo-controls">
+      <p class = "fnamey"> {{ object_list.track_1.name }} </p>
+      <audio id="audio" controls="controls">
+        <source src="{{ object_list.track_1.url }}" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+
+      <!--<div class = "ctrls" id="controls">
+        <button data-action="zoom-in">Zoom in</button>
+        <button data-action="zoom-out">Zoom out</button>
+        <button data-action="add-segment">Add a Segment at current time</button>
+        <button data-action="add-point">Add a Point at current time</button>
+        <button data-action="log-data">Log segments/points</button>
+        <input class = "st" type="text" id="seek-time" value="0.0">
+        <button data-action="seek">Seek</button>
+      </div>-->
+    </div>
+
+    <div class="log">
+      <div id="segments" class="hide">
+        <h2>Segments</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Label</th>
+              <th>Start time</th>
+              <th>End time</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="points" class="hide">
+        <h2>Points</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Label</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+<!-- Track 2-->
+
+    <div class = "wfcont" id="waveform-container-two">
+      <!--<div class = "zwcont" id="zoomview-container-two"></div>-->
+      <div class = "ovcont" id="overview-container-two"></div>
+    </div>
+
+    <div class = "dcontrols" id="demo-controls-two">
+      <p> {{ object_list.track_2.name }} </p>
+      <audio id="audioTwo" controls="controls">
+        <source src="{{ object_list.track_2.url }}" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+
+      <!--<div class = "ctrls" id="controls-two">
+        <button id = "zi-two" data-action="zoom-in">Zoom in</button>
+        <button id = "zo-two" data-action="zoom-out">Zoom out</button>
+        <button id = "as-two" data-action="add-segment">Add a Segment at current time</button>
+        <button id = "ap-two" data-action="add-point">Add a Point at current time</button>
+        <button id = "ld-two" data-action="log-data">Log segments/points</button>
+        <input type="text" id="seek-time-two" value="0.0">
+        <button class = "st" id = "s-two" data-action="seek">Seek</button>
+      </div>-->
+    </div>
+
+    <div class="log">
+      <div id="segments-two" class="hide">
+        <h2>Segments</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Label</th>
+              <th>Start time</th>
+              <th>End time</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody class = "tbody-two">
+          </tbody>
+        </table>
+      </div>
+
+      <div id="points-two" class="hide">
+        <h2>Points</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Label</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody class = "tbody-two">
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+<!-- Track 3-->
+
+    <div class = "wfcont" id="waveform-container-three">
+      <!--<div class = "zwcont" id="zoomview-container-three"></div>-->
+      <div class = "ovcont" id="overview-container-three"></div>
+    </div>
+
+    <div class = "dcontrols" id="demo-controls-three">
+      <p> {{ object_list.track_3.name }} </p>
+      <audio id="audio-three" controls="controls">
+        <source src="{{ object_list.track_3.url }}" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+
+      <!--<div class = "ctrls" id="controls-three">
+        <button id = "zi-three" data-action="zoom-in">Zoom in</button>
+        <button id = "zo-three" data-action="zoom-out">Zoom out</button>
+        <button id = "as-three" data-action="add-segment">Add a Segment at current time</button>
+        <button id = "ap-three" data-action="add-point">Add a Point at current time</button>
+        <button id = "ld-three" data-action="log-data">Log segments/points</button>
+        <input type="text" id="seek-time-three" value="0.0">
+        <button class = "st" id = "s-three" data-action="seek">Seek</button>
+      </div>-->
+    </div>
+
+    <div class="log">
+      <div id="segments-three" class="hide">
+        <h2>Segments</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Label</th>
+              <th>Start time</th>
+              <th>End time</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody class = "tbody-three">
+          </tbody>
+        </table>
+      </div>
+
+      <div id="points-three" class="hide">
+        <h2>Points</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Label</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody class = "tbody-three">
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+<!-- Track 4-->
+
+    <div class = "wfcont" id="waveform-container-four">
+      <!--<div class = "zwcont" id="zoomview-container-three"></div>-->
+      <div class = "ovcont" id="overview-container-four"></div>
+    </div>
+
+    <div class = "dcontrols" id="demo-controls-four">
+      <p> {{ object_list.track_4.name }} </p>
+      <audio id="audio-four" controls="controls">
+        <source src="{{ object_list.track_4.url }}" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+
+      <!--<div class = "ctrls" id="controls-three">
+        <button id = "zi-three" data-action="zoom-in">Zoom in</button>
+        <button id = "zo-three" data-action="zoom-out">Zoom out</button>
+        <button id = "as-three" data-action="add-segment">Add a Segment at current time</button>
+        <button id = "ap-three" data-action="add-point">Add a Point at current time</button>
+        <button id = "ld-three" data-action="log-data">Log segments/points</button>
+        <input type="text" id="seek-time-three" value="0.0">
+        <button class = "st" id = "s-three" data-action="seek">Seek</button>
+      </div>-->
+    </div>
+
+    <div class="log">
+      <div id="segments-four" class="hide">
+        <h2>Segments</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Label</th>
+              <th>Start time</th>
+              <th>End time</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody class = "tbody-four">
+          </tbody>
+        </table>
+      </div>
+
+      <div id="points-four" class="hide">
+        <h2>Points</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Label</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody class = "tbody-four">
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+</div>
+
+<p>Click the buttons to play or pause the audio.</p>
+
+<button onclick="playAudio()" type="button">Play Audio</button>
+<button onclick="pauseAudio()" type="button">Pause Audio</button> 
+<input type="range" id = "rangy" value = "5">
+
+    <div id = offtoright>
+  <a id = 'downloadbutton' href="{{ object_list.sound_file.url }}" download  class="btn btn-dark float-left">Download</a>  
+   <a id = 'uploadbutton'href="../upload" class="btn btn-dark float-left"> Upload your version</a>
+ </div>
+
+      {% load static %}
+  <script src="{% static 'peaks-js-master/demo/peaks.js' %}"></script>
+
+    <!--<script src="peaks.js"></script>-->
+    <script>
+      (function(Peaks) {
+        var renderSegments = function(peaks) {
+          var segmentsContainer = document.getElementById('segments');
+          var segments = peaks.segments.getSegments();
+          var html = '';
+
+          for (var i = 0; i < segments.length; i++) {
+            var segment = segments[i];
+
+            var row = '<tr>' +
+              '<td>' + segment.id + '</td>' +
+              '<td>' + segment.labelText + '</td>' +
+              '<td>' + segment.startTime + '</td>' +
+              '<td>' + segment.endTime + '</td>' +
+              '<td>' + '<a href="#' + segment.id + '" data-action="play-segment" data-id="' + segment.id + '">Play</a>' + '</td>' +
+              '<td>' + '<a href="#' + segment.id + '" data-action="remove-segment" data-id="' + segment.id + '">Remove</a>' + '</td>' +
+              '</tr>';
+
+            html += row;
+          }
+
+          segmentsContainer.querySelector('tbody').innerHTML = html;
+
+          if (html.length) {
+            segmentsContainer.classList.remove('hide');
+          }
+        }
+
+        var renderPoints = function(peaks) {
+          var pointsContainer = document.getElementById('points');
+          var points = peaks.points.getPoints();
+          var html = '';
+
+          for (var i = 0; i < points.length; i++) {
+            var point = points[i];
+
+            var row = '<tr>' +
+              '<td>' + point.id + '</td>' +
+              '<td>' + point.labelText + '</td>' +
+              '<td>' + point.time + '</td>' +
+              '<td>' + '<a href="#' + point.id + '" data-action="remove-point" data-id="' + point.id + '">Remove</a>' + '</td>' +
+              '</tr>';
+
+            html += row;
+          }
+
+          pointsContainer.querySelector('tbody').innerHTML = html;
+
+          if (html.length) {
+            pointsContainer.classList.remove('hide');
+          }
+        }
+
+        var AudioContext = window.AudioContext || window.webkitAudioContext;
+        var audioContext = new AudioContext();
+
+        var audioElement = document.getElementById('audio');
+
+        var options = {
+          containers: {
+            zoomview: document.getElementById('zoomview-container'),
+            overview: document.getElementById('overview-container')
+          },
+          mediaElement: audioElement,
+          webAudio: {
+            audioContext: audioContext,
+            scale: 128,
+            multiChannel: false
+          },
+          keyboard: true,
+          pointMarkerColor: '#006eb0',
+          showPlayheadTime: true,
+          zoomLevels: [128, 256, 512, 1024, 2048, 4096]
+        };
+
+        Peaks.init(options, function(err, peaksInstance) {
+          if (err) {
+            console.error(err.message);
+            return;
+          }
+
+          console.log('Peaks instance ready');
+
+          document.querySelector('[data-action="zoom-in"]').addEventListener('click', function() {
+            peaksInstance.zoom.zoomIn();
+          });
+
+          document.querySelector('[data-action="zoom-out"]').addEventListener('click', function() {
+            peaksInstance.zoom.zoomOut();
+          });
+
+          document.querySelector('button[data-action="add-segment"]').addEventListener('click', function() {
+            peaksInstance.segments.add({
+              startTime: peaksInstance.player.getCurrentTime(),
+              endTime: peaksInstance.player.getCurrentTime() + 10,
+              labelText: "Test segment",
+              editable: true
+            });
+          });
+
+          document.querySelector('button[data-action="add-point"]').addEventListener('click', function() {
+            peaksInstance.points.add({
+              time: peaksInstance.player.getCurrentTime(),
+              labelText: "Test point",
+              editable: true
+            });
+          });
+
+          document.querySelector('button[data-action="log-data"]').addEventListener('click', function(event) {
+            renderSegments(peaksInstance);
+            renderPoints(peaksInstance);
+          });
+
+          document.querySelector('button[data-action="seek"]').addEventListener('click', function(event) {
+            var time = document.getElementById('seek-time').value;
+            var seconds = parseFloat(time);
+
+            if (!Number.isNaN(seconds)) {
+              peaksInstance.player.seek(seconds);
+            }
+          });
+
+          document.querySelector('body').addEventListener('click', function(event) {
+            var element = event.target;
+            var action  = element.getAttribute('data-action');
+            var id      = element.getAttribute('data-id');
+
+            if (action === 'play-segment') {
+              var segment = peaksInstance.segments.getSegment(id);
+              peaksInstance.player.playSegment(segment);
+            }
+            else if (action === 'remove-point') {
+              peaksInstance.points.removeById(id);
+            }
+            else if (action === 'remove-segment') {
+              peaksInstance.segments.removeById(id);
+            }
+          });
+
+          // Points mouse events
+
+          peaksInstance.on('points.mouseenter', function(point) {
+            console.log('points.mouseenter:', point);
+          });
+
+          peaksInstance.on('points.mouseleave', function(point) {
+            console.log('points.mouseleave:', point);
+          });
+
+          peaksInstance.on('points.dblclick', function(point) {
+            console.log('points.dblclick:', point);
+          });
+
+          peaksInstance.on('points.dragstart', function(point) {
+            console.log('points.dragstart:', point);
+          });
+
+          peaksInstance.on('points.dragmove', function(point) {
+            console.log('points.dragmove:', point);
+          });
+
+          peaksInstance.on('points.dragend', function(point) {
+            console.log('points.dragend:', point);
+          });
+        });
+      })(peaks);
+
+// Track 2
+
+(function(Peaks) {
+        var renderSegments = function(peaks) {
+          var segmentsContainer = document.getElementById('segments-two');
+          var segments = peaks.segments.getSegments();
+          var html = '';
+
+          for (var i = 0; i < segments.length; i++) {
+            var segment = segments[i];
+
+            var row = '<tr>' +
+              '<td>' + segment.id + '</td>' +
+              '<td>' + segment.labelText + '</td>' +
+              '<td>' + segment.startTime + '</td>' +
+              '<td>' + segment.endTime + '</td>' +
+              '<td>' + '<a href="#' + segment.id + '" data-action="play-segment" data-id="' + segment.id + '">Play</a>' + '</td>' +
+              '<td>' + '<a href="#' + segment.id + '" data-action="remove-segment" data-id="' + segment.id + '">Remove</a>' + '</td>' +
+              '</tr>';
+
+            html += row;
+          }
+
+          segmentsContainer.querySelector('tbody-two').innerHTML = html;
+
+          if (html.length) {
+            segmentsContainer.classList.remove('hide');
+          }
+        }
+
+        var renderPoints = function(peaks) {
+          var pointsContainer = document.getElementById('points-two');
+          var points = peaks.points.getPoints();
+          var html = '';
+
+          for (var i = 0; i < points.length; i++) {
+            var point = points[i];
+
+            var row = '<tr>' +
+              '<td>' + point.id + '</td>' +
+              '<td>' + point.labelText + '</td>' +
+              '<td>' + point.time + '</td>' +
+              '<td>' + '<a href="#' + point.id + '" data-action="remove-point" data-id="' + point.id + '">Remove</a>' + '</td>' +
+              '</tr>';
+
+            html += row;
+          }
+
+          pointsContainer.querySelector('tbody-two').innerHTML = html;
+
+          if (html.length) {
+            pointsContainer.classList.remove('hide');
+          }
+        }
+
+        var AudioContext = window.AudioContext || window.webkitAudioContext;
+        var audioContext = new AudioContext();
+
+        var audioElement = document.getElementById('audioTwo');
+
+        var options = {
+          containers: {
+            zoomview: document.getElementById('zoomview-container-two'),
+            overview: document.getElementById('overview-container-two')
+          },
+          mediaElement: audioElement,
+          webAudio: {
+            audioContext: audioContext,
+            scale: 128,
+            multiChannel: false
+          },
+          keyboard: true,
+          pointMarkerColor: '#006eb0',
+          showPlayheadTime: true,
+          zoomLevels: [128, 256, 512, 1024, 2048, 4096]
+        };
+
+        Peaks.init(options, function(err, peaksInstance) {
+          if (err) {
+            console.error(err.message);
+            return;
+          }
+
+          console.log('Peaks instance ready');
+
+          document.querySelector('zi-two').addEventListener('click', function() {
+            peaksInstance.zoom.zoomIn();
+          });
+
+          document.querySelector('zo-two').addEventListener('click', function() {
+            peaksInstance.zoom.zoomOut();
+          });
+
+          document.querySelector('as-two').addEventListener('click', function() {
+            peaksInstance.segments.add({
+              startTime: peaksInstance.player.getCurrentTime(),
+              endTime: peaksInstance.player.getCurrentTime() + 10,
+              labelText: "Test segment",
+              editable: true
+            });
+          });
+
+          document.querySelector('ap-two').addEventListener('click', function() {
+            peaksInstance.points.add({
+              time: peaksInstance.player.getCurrentTime(),
+              labelText: "Test point",
+              editable: true
+            });
+          });
+
+          document.querySelector('ld-two').addEventListener('click', function(event) {
+            renderSegments(peaksInstance);
+            renderPoints(peaksInstance);
+          });
+
+          document.querySelector('s-two').addEventListener('click', function(event) {
+            var time = document.getElementById('seek-time').value;
+            var seconds = parseFloat(time);
+
+            if (!Number.isNaN(seconds)) {
+              peaksInstance.player.seek(seconds);
+            }
+          });
+
+          document.querySelector('body-two').addEventListener('click', function(event) {
+            var element = event.target;
+            var action  = element.getAttribute('data-action');
+            var id      = element.getAttribute('data-id');
+
+            if (action === 'play-segment') {
+              var segment = peaksInstance.segments.getSegment(id);
+              peaksInstance.player.playSegment(segment);
+            }
+            else if (action === 'remove-point') {
+              peaksInstance.points.removeById(id);
+            }
+            else if (action === 'remove-segment') {
+              peaksInstance.segments.removeById(id);
+            }
+          });
+
+          // Points mouse events
+
+          peaksInstance.on('points.mouseenter', function(point) {
+            console.log('points.mouseenter:', point);
+          });
+
+          peaksInstance.on('points.mouseleave', function(point) {
+            console.log('points.mouseleave:', point);
+          });
+
+          peaksInstance.on('points.dblclick', function(point) {
+            console.log('points.dblclick:', point);
+          });
+
+          peaksInstance.on('points.dragstart', function(point) {
+            console.log('points.dragstart:', point);
+          });
+
+          peaksInstance.on('points.dragmove', function(point) {
+            console.log('points.dragmove:', point);
+          });
+
+          peaksInstance.on('points.dragend', function(point) {
+            console.log('points.dragend:', point);
+          });
+        });
+      })(peaks);
+
+// Track 3 and onwards declaration of function...
+
+function tracks() {
+(function(Peaks) {
+        var renderSegments = function(peaks) {
+          var segmentsContainer = document.getElementById(segs);
+          var segments = peaks.segments.getSegments();
+          var html = '';
+
+          for (var i = 0; i < segments.length; i++) {
+            var segment = segments[i];
+
+            var row = '<tr>' +
+              '<td>' + segment.id + '</td>' +
+              '<td>' + segment.labelText + '</td>' +
+              '<td>' + segment.startTime + '</td>' +
+              '<td>' + segment.endTime + '</td>' +
+              '<td>' + '<a href="#' + segment.id + '" data-action="play-segment" data-id="' + segment.id + '">Play</a>' + '</td>' +
+              '<td>' + '<a href="#' + segment.id + '" data-action="remove-segment" data-id="' + segment.id + '">Remove</a>' + '</td>' +
+              '</tr>';
+
+            html += row;
+          }
+
+          segmentsContainer.querySelector(textybody).innerHTML = html;
+
+          if (html.length) {
+            segmentsContainer.classList.remove('hide');
+          }
+        }
+
+        var renderPoints = function(peaks) {
+          var pointsContainer = document.getElementById(pointy);
+          var points = peaks.points.getPoints();
+          var html = '';
+
+          for (var i = 0; i < points.length; i++) {
+            var point = points[i];
+
+            var row = '<tr>' +
+              '<td>' + point.id + '</td>' +
+              '<td>' + point.labelText + '</td>' +
+              '<td>' + point.time + '</td>' +
+              '<td>' + '<a href="#' + point.id + '" data-action="remove-point" data-id="' + point.id + '">Remove</a>' + '</td>' +
+              '</tr>';
+
+            html += row;
+          }
+
+          pointsContainer.querySelector(textybody).innerHTML = html;
+
+          if (html.length) {
+            pointsContainer.classList.remove('hide');
+          }
+        }
+
+        var AudioContext = window.AudioContext || window.webkitAudioContext;
+        var audioContext = new AudioContext();
+
+        var audioElement = document.getElementById(audioflavour);
+
+        var options = {
+          containers: {
+            zoomview: document.getElementById(zmvw),
+            overview: document.getElementById(ovw)
+          },
+          mediaElement: audioElement,
+          webAudio: {
+            audioContext: audioContext,
+            scale: 128,
+            multiChannel: false
+          },
+          keyboard: true,
+          pointMarkerColor: '#006eb0',
+          showPlayheadTime: true,
+          zoomLevels: [128, 256, 512, 1024, 2048, 4096]
+        };
+
+        Peaks.init(options, function(err, peaksInstance) {
+          if (err) {
+            console.error(err.message);
+            return;
+          }
+
+          console.log('Peaks instance ready');
+
+          document.querySelector(idzi).addEventListener('click', function() {
+            peaksInstance.zoom.zoomIn();
+          });
+
+          document.querySelector(idzo).addEventListener('click', function() {
+            peaksInstance.zoom.zoomOut();
+          });
+
+          document.querySelector(idas).addEventListener('click', function() {
+            peaksInstance.segments.add({
+              startTime: peaksInstance.player.getCurrentTime(),
+              endTime: peaksInstance.player.getCurrentTime() + 10,
+              labelText: "Test segment",
+              editable: true
+            });
+          });
+
+          document.querySelector(idap).addEventListener('click', function() {
+            peaksInstance.points.add({
+              time: peaksInstance.player.getCurrentTime(),
+              labelText: "Test point",
+              editable: true
+            });
+          });
+
+          document.querySelector(idlp).addEventListener('click', function(event) {
+            renderSegments(peaksInstance);
+            renderPoints(peaksInstance);
+          });
+
+          document.querySelector(ids).addEventListener('click', function(event) {
+            var time = document.getElementById('seek-time').value;
+            var seconds = parseFloat(time);
+
+            if (!Number.isNaN(seconds)) {
+              peaksInstance.player.seek(seconds);
+            }
+          });
+
+          document.querySelector(textybody).addEventListener('click', function(event) {
+            var element = event.target;
+            var action  = element.getAttribute('data-action');
+            var id      = element.getAttribute('data-id');
+
+            if (action === 'play-segment') {
+              var segment = peaksInstance.segments.getSegment(id);
+              peaksInstance.player.playSegment(segment);
+            }
+            else if (action === 'remove-point') {
+              peaksInstance.points.removeById(id);
+            }
+            else if (action === 'remove-segment') {
+              peaksInstance.segments.removeById(id);
+            }
+          });
+
+          // Points mouse events
+
+          peaksInstance.on('points.mouseenter', function(point) {
+            console.log('points.mouseenter:', point);
+          });
+
+          peaksInstance.on('points.mouseleave', function(point) {
+            console.log('points.mouseleave:', point);
+          });
+
+          peaksInstance.on('points.dblclick', function(point) {
+            console.log('points.dblclick:', point);
+          });
+
+          peaksInstance.on('points.dragstart', function(point) {
+            console.log('points.dragstart:', point);
+          });
+
+          peaksInstance.on('points.dragmove', function(point) {
+            console.log('points.dragmove:', point);
+          });
+
+          peaksInstance.on('points.dragend', function(point) {
+            console.log('points.dragend:', point);
+          });
+        });
+      })(peaks);      
+}
+
+var segs = 'segments-three';
+var textybody = 'tbody-three';
+var pointy = 'points-three';
+var audioflavour = 'audioThree';
+var zmvw = 'zoomview-container-three';
+var ovw = 'overview-container-three';
+var idzi = 'zi-three';
+var idzo = 'zo-three';
+var idas = 'as-three';
+var idap = 'ap-three';
+var idlp = 'ld-three';
+var ids = 's-three';
+
+tracks(segs, textybody, pointy, audioflavour, zmvw, ovw, idzi, idzo, idas, idap, idlp, ids);
+
+var segs = 'segments-four';
+var textybody = 'tbody-four';
+var pointy = 'points-four';
+var audioflavour = 'audioFour';
+var zmvw = 'zoomview-container-four';
+var ovw = 'overview-container-four';
+var idzi = 'zi-four';
+var idzo = 'zo-four';
+var idas = 'as-four';
+var idap = 'ap-four';
+var idlp = 'ld-four';
+var ids = 's-four';
+
+tracks(segs, textybody, pointy, audioflavour, zmvw, ovw, idzi, idzo, idas, idap, idlp, ids);
+
+var segs = 'segments-five';
+var textybody = 'tbody-five';
+var pointy = 'points-five';
+var audioflavour = 'audioFive';
+var zmvw = 'zoomview-container-five';
+var ovw = 'overview-container-five';
+var idzi = 'zi-five';
+var idzo = 'zo-five';
+var idas = 'as-five';
+var idap = 'ap-five';
+var idlp = 'ld-five';
+var ids = 's-five';
+
+tracks(segs, textybody, pointy, audioflavour, zmvw, ovw, idzi, idzo, idas, idap, idlp, ids);
+
+var a = document.getElementById("audio");
+var b = document.getElementById("audioTwo");
+var c = document.getElementById("audioThree");
+var d = document.getElementById("audioFour");
+var e = document.getElementById("audioFive");
+var f = document.getElementById("audioSix");
+var g = document.getElementById("audioSeven");
+var h = document.getElementById("audioEight");
+var i = document.getElementById("audioNine");
+var j = document.getElementById("audioTen");
+var k = document.getElementById("audioEleven");
+var l = document.getElementById("audioTwelve");
+var m = document.getElementById("audioThirteen");
+var n = document.getElementById("audioFourteen");
+var o = document.getElementById("audioFifteen");
+var p = document.getElementById("audioSixteen");
+
+function playAudio() {
+  a.play();
+  b.play(); 
+  c.play();
+  d.play();
+  e.play();
+  f.play();
+  g.play();
+  h.play();
+  i.play();
+  j.play();
+  k.play();
+  l.play();
+  m.play();
+  n.play();
+  o.play(); 
+  p.play(); 
+} 
+
+function pauseAudio() { 
+  a.pause();
+  b.pause();
+  c.pause();
+  d.pause();
+  e.pause();
+  f.pause();
+  g.pause();
+  h.pause();
+  i.pause();
+  j.pause();
+  k.pause();
+  l.pause();
+  m.pause();
+  n.pause();
+  o.pause();
+  p.pause(); 
+} 
+
+//var timefromrange = document.getElementById("rangy");
+
+//var timefromrange = 
+//audio.currentTime = $('rangy').val();
+//audio.currentTime = timefromrange;
+
+/*$("#rangy").change(function(){
+    var value = $(this).val();
+    audio.currentTime = value;
+})*/
+
+var input = document.getElementById('rangy');
+console.info(input.defaultValue); // value default (15)
+input.onchange = function () {
+  console.info(input.value); // value change
+  audio.currentTime = input.value;
+  audioTwo.currentTime = input.value;
+  audioThree.currentTime = input.value;
+  audioFour.currentTime = input.value;
+  audioFive.currentTime = input.value;
+  audioSix.currentTime = input.value;
+  audioSeven.currentTime = input.value;
+  audioEight.currentTime = input.value;
+  audioNine.currentTime = input.value;
+  audioTen.currentTime = input.value;
+  audioEleven.currentTime = input.value;
+  audioTwelve.currentTime = input.value;
+  audioThirteen.currentTime = input.value;
+  audioFourteen.currentTime = input.value;
+  audioFifteen.currentTime = input.value;
+  audioSixteen.currentTime = input.value;
+};
+
+
+
+    </script>
+  </body>
+</html>
+
+

@@ -1,0 +1,50 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<style>
+#home {
+    text-shadow: none;
+}
+
+#stems {      
+    text-shadow:
+    0 0 4px rgba(202,228,225,0.98),
+    0 0 2px rgba(202,228,225,0.42),
+    0 0 2px rgba(30,132,242,0.58),
+    0 0 2px rgba(30,132,242,0.84),
+    0 0 2px rgba(30,132,242,0.88),
+    0 0 2px rgba(30,132,242,1);
+}
+
+ .col-sm-10  {
+    top: 5em;
+    left: 20em;
+  }
+
+</style>   
+
+<h1>The Evolution of the Seed (Stems Version)</h1>
+
+  <div class="container" id="columns">
+    {% for document in object_list%}
+
+      <h2 id = 'ttitle'> {{ document.mixed_render.name }} </h2>
+      <p> Created on: {{ document.created_on}} </p>
+      <p> Created by: {{ document.user }} </p>
+      <p> Comments: {{ document.comments }}</p>
+      <br>    
+      <audio controls id="player">
+        <source src="{{ document.mixed_render.url }}">
+      </audio>
+    {% endfor %}
+  </div>
+  
+<div>
+  <a href="../catalog/stems-download" class="btn btn-dark float-left">Get the most recent version</a> 
+</div>  
+<div>  
+   <a href="../catalog/stem-upload" class="btn btn-dark float-right"> Upload your version</a>
+ </div>
+
+{% endblock %}

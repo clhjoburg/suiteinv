@@ -1,0 +1,27 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<style>
+.col-sm-10  {
+    top: 5em;
+    left: 20em;
+  }
+  
+</style>  
+
+<h1><em>Upload your evolution</em></h1>
+
+<div class="container">
+<form action="#" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form.as_p }}
+    <button class="btn btn-primary btn-sm" type="submit">Upload</button>
+    <!--<label for="name">Enter name: </label>
+    <input id="name" type="text" name="name" value="Default Filename.">
+    <input type="submit" value="OK">-->    
+
+</form>
+</div>
+{% endblock %}

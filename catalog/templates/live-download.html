@@ -1,0 +1,912 @@
+{% extends "baseFour.html" %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Most recent evolution</title>
+    <style>
+      #home {
+        text-shadow: none;
+      }
+      
+      #live-download {
+        text-shadow:
+        0 0 4px rgba(202,228,225,0.98),
+        0 0 2px rgba(202,228,225,0.42),
+        0 0 2px rgba(30,132,242,0.58),
+        0 0 2px rgba(30,132,242,0.84),
+        0 0 2px rgba(30,132,242,0.88),
+        0 0 2px rgba(30,132,242,1);
+      }
+
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+  z-index: 5;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#spinner {
+  position: relative;
+  left: 800px;
+  top:  60px;
+}
+
+       .col-sm-10  {
+    top: 5em;
+    left: 20em;
+  }
+
+#comments {
+  position: absolute;
+  top: 370px;
+  left: -300px;
+  width: 285px;
+  height: 300px;
+  padding: 5px;
+  overflow: scroll;
+  font-size: 12pt;
+  -webkit-box-shadow: 3px 3px 20px #919191;
+  box-shadow: 3px 3px 20px #919191;
+  visibility: hidden;
+}
+
+#comments-button {
+  color: white;
+  background-color: rgba(29, 8, 56, 0.7);
+  width:90px;
+  height:35px;
+  position: absolute;
+  top: 255px;
+  left: -300px;
+  font-size: 8pt;
+  z-index: 3;
+}
+      #titles {
+        margin: 24px auto;
+        width: 1000px;
+        position: absolute;
+        left: -300px;
+        top: -15px;
+
+      }
+
+body {
+  font-family: 'Helvetica neue', Helvetica, Arial, sans-serif;
+  /*background-image: url("/static/css/images/tree-5803607_1920.jpg");  
+  background-position: absolute;
+  background-repeat: no-repeat;
+  background-size: cover;*/
+  /*height: 2000px;*/
+ 
+      }
+
+#mainTitle { visibility: visible; }
+#altTitle { visibility: hidden; }
+
+      h1 {
+        font-size: 27pt;
+      }
+
+      #offtoright {
+        position: absolute;
+        left: -300px;
+        top: 300px;
+      }
+
+     #waveform-container {
+        margin: 24px auto;
+        width: 1000px;
+        /*background-color: rgba(39, 66, 97, 0.7);*/
+      }
+
+      #zoomview-container, #overview-container {
+        margin: 0 0 24px 0;
+        line-height: 0;
+        background-color: rgba(39, 66, 97, 0.7);
+        -webkit-box-shadow: 3px 3px 20px #919191;
+        box-shadow: 3px 3px 20px #919191;
+      }
+
+      #zoomview-container {
+        height: 200px;
+      }
+
+      #overview-container {
+        height: 85px;
+      }
+
+
+      #demo-controls button {
+        color: white;
+        border: 1px solid #919191;
+        border-radius: 5%;
+        cursor: pointer;
+          -webkit-box-shadow: 3px 3px 20px #919191;
+        box-shadow: 3px 3px 20px #919191;
+        background-color: rgba(39, 66, 97, 0.6);
+
+
+      }
+
+      #controls {
+        flex: 1;
+        margin-left: 1em;
+        position: relative;
+        left: -315px;
+        top: 62px;
+      }
+
+      #seek-time {
+        width: 60px;
+        height: 21px;
+        border: 1px solid #919191;
+        border-radius: 7%;
+        color: white;
+        -webkit-box-shadow: 3px 3px 20px #919191;
+        box-shadow: 3px 3px 20px #919191;
+        background-color: rgba(39, 66, 97, 0.6);
+      }
+      #downloadloadbutton {
+        margin-left: 2px;
+      }
+
+      #uploadbutton {
+        margin-left: 15px;
+      }
+
+      .log {
+        margin: 0 auto 24px auto;
+        width: 1000px;
+      }
+
+      table {
+        width: 100%;
+      }
+
+      table th {
+        text-align: left;
+      }
+
+      table th, table td {
+        padding: 0.5em;
+      }
+
+      .hide {
+        display: none;
+      }
+
+      #demo-controls, #waveform-container {
+        position: absolute;
+        top: 0px;
+        left: 400px;
+      }
+
+      #demo-controls {
+        margin: 0 auto 24px auto;
+        display: flex;
+        align-items: left;
+        width: 900px;
+        position: absolute;
+        left: 700px;
+        top: 300px;
+      }
+
+      #audio {
+        flex: 0 0 30%;
+        position: absolute;
+        left: -1000px;
+        top: -220px;
+        width: 250px;
+        z-index: 3;
+      }
+
+
+
+/* ----------------MEDIA SCREEN 1788px -------------------------------*/
+      @media screen and (max-width: 1788px) {
+
+
+     #waveform-container {
+        margin: 24px auto;
+        width: 870px;
+        left: 230px;
+        top: 50px;
+      }
+
+     #demo-controls {
+        width: 800px;
+        left: 530px;
+        top: 350px;
+      }
+
+      #audio {
+        left: -830px; 
+        top: -270px; 
+      }
+
+      }      
+/* ----------------MEDIA SCREEN 1500px -------------------------------*/
+      @media screen and (max-width: 1500px) {
+body {
+  background-size: 265vw 980px;
+  overflow-x: hidden;
+}
+
+#comments-button{
+top: -3px;
+left: 120px;
+}
+
+#comments {
+  top: 100px;
+  left: 0;
+  width: 415px;
+  height: 130px;
+  background-color: rgba(39, 66, 97, 0.7);
+}
+#downloadbutton, #uploadbutton {
+  font-size: 8pt;
+  height: 20px;
+  width: 120px;
+  z-index: 3;
+  background-color: rgba(29, 8, 56, 0.7);
+  padding: 0px;
+  -webkit-box-shadow: 3px 3px 20px #919191;
+  box-shadow: 3px 3px 20px #919191;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+#uploadbutton {
+  left: 130px;
+}
+
+#titles {
+  position: absolute;
+  top: -30px;
+}
+
+h1 {
+  font-size: 18pt;
+}
+
+p {
+  font-size: 10pt;
+}
+
+#audio {
+  position: absolute;
+  left: -830px;
+  top: -310px;
+  width: 200px;
+  height: 40px;
+}
+
+#waveform-container {
+    left: -300px;
+    top: 220px;
+    width: 715px;
+}
+
+#zoomview-container {
+  height: 100px;
+}
+
+#overview-container {
+  background-color: rgba(112, 134, 207, 0.5);
+  height: 80px;
+}
+
+#controls {
+  position: absolute;
+  left: -630px;
+  top: -310px;
+  width: 600px;
+}
+#controls button {
+  font-size: 10pt;
+} 
+
+#offtoright {
+  position: absolute;
+  top: 200px;
+  }
+}      
+
+/* ----------------MEDIA SCREEN 1280px -------------------------------*/
+      @media screen and (max-width: 1280px) {
+body {
+  background-size: 265vw 900px;
+  position: fixed;
+  overflow: hidden;
+  background-repeat: repeat;
+}
+
+#comments-button{
+left: 200px;
+}
+
+#comments {
+  width: 430px;
+  height: 100px;
+  background-color: rgba(39, 66, 97, 0.7);
+}
+
+#navbar {
+  top: -30px;
+  }
+
+#downloadbutton, #uploadbutton {
+  font-size: 8pt;
+  height: 20px;
+  width: 120px;
+  z-index: 3;
+  background-color: rgba(29, 8, 56, 0.7);
+  padding: 0px;
+  -webkit-box-shadow: 3px 3px 20px #919191;
+  box-shadow: 3px 3px 20px #919191;
+  position: absolute;
+  top: -150px;
+  left: 320px;
+}
+
+#uploadbutton {
+  left: 450px;
+}
+
+#titles {
+  position: absolute;
+  top: -30px;
+  left:  -210px;
+}
+
+h1 {
+  font-size: 18pt;
+}
+
+p {
+  font-size: 10pt;
+}
+
+#audio {
+  position: absolute;
+  left: -740px;
+  top: -310px;
+  width: 200px;
+  height: 40px;
+}
+
+#waveform-container {
+    left: -210px;
+    top: 200px;
+    width: 640px;
+}
+
+#zoomview-container {
+  height: 100px;
+}
+
+#overview-container {
+  background-color: rgba(112, 134, 207, 0.5);
+  height: 80px;
+}
+
+#controls {
+  position: absolute;
+  left: -755px;
+  top: 100px;
+  width: 600px;
+}
+#controls button {
+  font-size: 10pt;
+} 
+
+}      
+
+/* ----------------MEDIA SCREEN 1024px -------------------------------*/
+    @media screen and (max-width: 1024px) {
+#spinner {
+  position: relative;
+  left: 300px;
+  top:  70px;
+  }
+}
+
+/* ----------------MEDIA SCREEN 1000px -------------------------------*/
+      @media screen and (max-width: 1000px) {
+body {
+  background-size: 275vw 890px;
+  overflow-x: hidden;
+  height: 800px;
+  background-repeat: repeat;
+}
+
+#comments-button {
+top: 125px;
+}
+
+#comments {
+  top: 230px;
+  left: 20px;
+  height: 90px;
+  width: 415px;
+  background-color: rgba(39, 66, 97, 0.7);
+}
+
+#downloadbutton, #uploadbutton {
+  font-size: 8pt;
+  height: 20px;
+  width: 120px;
+  z-index: 3;
+  background-color: rgba(29, 8, 56, 0.7);
+  padding: 0px;
+  -webkit-box-shadow: 3px 3px 20px #919191;
+  box-shadow: 3px 3px 20px #919191;
+  position: absolute;
+  top: -112px;
+  left: 12px;
+}
+
+#uploadbutton {
+  left: 200px;
+}
+
+#titles {
+  position: absolute;
+  top: 100px;
+}
+
+h1 {
+  font-size: 18pt;
+}
+
+p {
+  font-size: 10pt;
+}
+
+#audio {
+  position: absolute;
+  left: -740px;
+  top: -180px;
+  width: 200px;
+  height: 40px;
+}
+
+#waveform-container {
+    left: -205px;
+    top: 370px;
+    width: 640px;
+}
+
+#zoomview-container {
+  height: 100px;
+}
+
+#overview-container {
+  background-color: rgba(112, 134, 207, 0.5);
+  height: 80px;
+}
+
+#controls {
+  position: absolute;
+  left: -750px;
+  top: -20px;
+  width: 600px;
+}
+#controls button {
+  font-size: 10pt;
+} 
+
+}
+
+/* ----------------MEDIA SCREEN 768px -------------------------------*/
+      @media screen and (max-width: 768px) {
+
+        .loader {
+  border: 8px solid #f3f3f3; /* Light grey */
+  border-top: 8px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+}
+
+#spinner {
+  position: relative;
+  left: -20px;
+  top:  215px;
+  }
+
+}
+
+/* ----------------MEDIA SCREEN 684px -------------------------------*/
+      @media screen and (max-width: 684px) {
+
+#spinner {
+  top:  185px;
+  }
+
+body {
+  background-size: 275vw 900px;
+   background-repeat: repeat;
+  overflow-x: hidden;
+}
+
+#mainTitle { visibility: hidden; }
+#altTitle { visibility: visible; }
+
+#comments-button {
+ top: 130px;
+ left: -30px;
+}
+
+#comments {
+  top: 340px;
+  left: -280px;
+  height: 190px;
+  width: 345px;
+  background-color: rgba(39, 66, 97, 1);
+  z-index: 3;
+}
+
+#downloadbutton, #uploadbutton {
+  font-size: 8pt;
+  height: 20px;
+  width: 120px;
+  z-index: 3;
+  background-color: rgba(29, 8, 56, 0.7);
+  padding: 0px;
+  -webkit-box-shadow: 3px 3px 20px #919191;
+  box-shadow: 3px 3px 20px #919191;
+  position: absolute;
+  top: -112px;
+  left: 12px;
+}
+
+#uploadbutton {
+  left: 200px;
+}
+
+#titles {
+  position: absolute;
+  top: 70px;
+  left: -250px;
+}
+
+h1 {
+  font-size: 18pt;
+}
+
+p {
+  font-size: 10pt;
+}
+
+#audio {
+  position: absolute;
+  left: -780px;
+  top: -60px;
+  width: 200px;
+  height: 40px;
+}
+
+#waveform-container {
+    left: -275px;
+    top: 400px;
+    width: 340px;
+}
+
+#zoomview-container {
+  height: 100px;
+}
+
+#overview-container {
+  background-color: rgba(112, 134, 207, 0.5);
+  height: 80px;
+}
+
+#controls {
+  position: absolute;
+  left: -810px;
+  top: 0px;
+  width: 350px;
+}
+#controls button {
+  font-size: 10pt;
+} 
+
+}
+
+/* ----------------MEDIA SCREEN 684px -------------------------------*/
+      @media screen and (max-width: 684px) and (max-height:  667px) {
+#overview-container {
+  visibility: hidden;
+  }
+}
+    </style>
+  </head>
+  <body>
+  <button id="comments-button" onclick="displayComments()">View Comments</button>
+  <div id="comments"> 
+    <p> Comments: {{ object_list.comments }}</p>
+  </div>  
+    <div id="titles">
+      <h1 id="mainTitle">The Most Recent Ableton Evolution</h1>
+      <h1 id="altTitle">The Most Recent <br> Ableton Evolution</h1>
+      <p> {{ object_list.live_render.name }} </p>
+      <p> Created on: {{ object_list.created_on}} </p>
+      <p> Created by: {{ object_list.user }} </p>
+    </div>
+       <div id="spinner" class="loader"></div> 
+    <div id="waveform-container">
+      <div id="zoomview-container"></div>
+      <div id="overview-container"></div>
+    </div>
+
+    <div id="demo-controls">
+    <!--  <audio id="audio" controls="controls">
+        <source src="TOL_6min_720p_download.mp3" type="audio/mpeg">
+        <source src="TOL_6min_720p_download.ogg" type="audio/ogg">
+        Your browser does not support the audio element.
+      </audio>-->
+
+      <audio id="audio" controls="controls">
+        <source src="{{ object_list.live_render.url }}" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+
+      <div id="controls">
+        <button data-action="zoom-in">Zoom in</button>
+        <button data-action="zoom-out">Zoom out</button>
+        <button data-action="add-segment">Add a Segment at current time</button>
+        <button data-action="add-point">Add a Point at current time</button>
+        <button data-action="log-data">Log segments/points</button>
+        <input type="text" id="seek-time" value="0.0">
+        <button data-action="seek">Seek</button>
+      </div>
+    </div>
+
+    <div class="log">
+      <div id="segments" class="hide">
+        <h2>Segments</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Label</th>
+              <th>Start time</th>
+              <th>End time</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="points" class="hide">
+        <h2>Points</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Label</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id = offtoright>
+  <a id = 'downloadbutton' href="{% url 'live-download-cont' %}" class="btn btn-dark float-left">Download</a>  
+   <a id = 'uploadbutton'href="live-upload" class="btn btn-dark float-left"> Upload your version</a>
+ </div>
+
+      {% load static %}
+  <script src="{% static 'peaks-js-master/demo/peaks.js' %}"></script>
+
+    <!--<script src="peaks.js"></script>-->
+    <script>
+      (function(Peaks) {
+        var renderSegments = function(peaks) {
+          var segmentsContainer = document.getElementById('segments');
+          var segments = peaks.segments.getSegments();
+          var html = '';
+
+          for (var i = 0; i < segments.length; i++) {
+            var segment = segments[i];
+
+            var row = '<tr>' +
+              '<td>' + segment.id + '</td>' +
+              '<td>' + segment.labelText + '</td>' +
+              '<td>' + segment.startTime + '</td>' +
+              '<td>' + segment.endTime + '</td>' +
+              '<td>' + '<a href="#' + segment.id + '" data-action="play-segment" data-id="' + segment.id + '">Play</a>' + '</td>' +
+              '<td>' + '<a href="#' + segment.id + '" data-action="remove-segment" data-id="' + segment.id + '">Remove</a>' + '</td>' +
+              '</tr>';
+
+            html += row;
+          }
+
+          segmentsContainer.querySelector('tbody').innerHTML = html;
+
+          if (html.length) {
+            segmentsContainer.classList.remove('hide');
+          }
+        }
+
+        var renderPoints = function(peaks) {
+          var pointsContainer = document.getElementById('points');
+          var points = peaks.points.getPoints();
+          var html = '';
+
+          for (var i = 0; i < points.length; i++) {
+            var point = points[i];
+
+            var row = '<tr>' +
+              '<td>' + point.id + '</td>' +
+              '<td>' + point.labelText + '</td>' +
+              '<td>' + point.time + '</td>' +
+              '<td>' + '<a href="#' + point.id + '" data-action="remove-point" data-id="' + point.id + '">Remove</a>' + '</td>' +
+              '</tr>';
+
+            html += row;
+          }
+
+          pointsContainer.querySelector('tbody').innerHTML = html;
+
+          if (html.length) {
+            pointsContainer.classList.remove('hide');
+          }
+        }
+
+        var AudioContext = window.AudioContext || window.webkitAudioContext;
+        var audioContext = new AudioContext();
+
+        var audioElement = document.getElementById('audio');
+
+        var options = {
+          containers: {
+            zoomview: document.getElementById('zoomview-container'),
+            overview: document.getElementById('overview-container')
+          },
+          mediaElement: audioElement,
+          webAudio: {
+            audioContext: audioContext,
+            scale: 128,
+            multiChannel: false
+          },
+          keyboard: true,
+          pointMarkerColor: '#006eb0',
+          showPlayheadTime: true,
+          zoomLevels: [128, 256, 512, 1024, 2048, 4096]
+        };
+
+        Peaks.init(options, function(err, peaksInstance) {
+          if (err) {
+            console.error(err.message);
+            return;
+          }
+
+          console.log('Peaks instance ready');
+
+          var sp = document.getElementById("spinner");
+          sp.style.visibility = "hidden";
+
+          document.querySelector('[data-action="zoom-in"]').addEventListener('click', function() {
+            peaksInstance.zoom.zoomIn();
+          });
+
+          document.querySelector('[data-action="zoom-out"]').addEventListener('click', function() {
+            peaksInstance.zoom.zoomOut();
+          });
+
+          document.querySelector('button[data-action="add-segment"]').addEventListener('click', function() {
+            peaksInstance.segments.add({
+              startTime: peaksInstance.player.getCurrentTime(),
+              endTime: peaksInstance.player.getCurrentTime() + 10,
+              labelText: "Test segment",
+              editable: true
+            });
+          });
+
+          document.querySelector('button[data-action="add-point"]').addEventListener('click', function() {
+            peaksInstance.points.add({
+              time: peaksInstance.player.getCurrentTime(),
+              labelText: "Test point",
+              editable: true
+            });
+          });
+
+          document.querySelector('button[data-action="log-data"]').addEventListener('click', function(event) {
+            renderSegments(peaksInstance);
+            renderPoints(peaksInstance);
+          });
+
+          document.querySelector('button[data-action="seek"]').addEventListener('click', function(event) {
+            var time = document.getElementById('seek-time').value;
+            var seconds = parseFloat(time);
+
+            if (!Number.isNaN(seconds)) {
+              peaksInstance.player.seek(seconds);
+            }
+          });
+
+          document.querySelector('body').addEventListener('click', function(event) {
+            var element = event.target;
+            var action  = element.getAttribute('data-action');
+            var id      = element.getAttribute('data-id');
+
+            if (action === 'play-segment') {
+              var segment = peaksInstance.segments.getSegment(id);
+              peaksInstance.player.playSegment(segment);
+            }
+            else if (action === 'remove-point') {
+              peaksInstance.points.removeById(id);
+            }
+            else if (action === 'remove-segment') {
+              peaksInstance.segments.removeById(id);
+            }
+          });
+
+          // Points mouse events
+
+          peaksInstance.on('points.mouseenter', function(point) {
+            console.log('points.mouseenter:', point);
+          });
+
+          peaksInstance.on('points.mouseleave', function(point) {
+            console.log('points.mouseleave:', point);
+          });
+
+          peaksInstance.on('points.dblclick', function(point) {
+            console.log('points.dblclick:', point);
+          });
+
+          peaksInstance.on('points.dragstart', function(point) {
+            console.log('points.dragstart:', point);
+          });
+
+          peaksInstance.on('points.dragmove', function(point) {
+            console.log('points.dragmove:', point);
+          });
+
+          peaksInstance.on('points.dragend', function(point) {
+            console.log('points.dragend:', point);
+          });
+        });
+      })(peaks);
+
+var commentbox = document.getElementById("comments");
+var commentToggle = true;
+
+function displayComments() {  
+  if (commentToggle) {
+      commentbox.style.visibility = "visible";
+      document.getElementById("comments-button").innerHTML = "Hide Comments"
+      commentToggle = false;
+  } else {
+    commentbox.style.visibility = "hidden";
+    document.getElementById("comments-button").innerHTML = "View Comments"
+    commentToggle = true;
+  }
+}     
+    </script>
+  </body>
+</html>
+
+{% endblock %}

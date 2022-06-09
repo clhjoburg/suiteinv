@@ -1,0 +1,197 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<head>
+  {% load static %}
+  <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon" />  
+<style>
+
+/*#columns {
+  height: 100vw;
+  width: 100vw;
+  overflow: scroll;
+}*/
+p {
+  color: rgb(0, 138, 230);
+  text-shadow: 2px 2px black;
+}
+
+h2 {
+  color: rgb(191, 167, 204);
+  text-shadow: 2px 2px black;
+}
+
+#blackbackground {
+  background-color: rgba(38, 38, 38, 0.5);
+  /*background-color: rgba(14, 19, 71, 0.4);*/
+  position: absolute;
+  left: -180px;
+  height: 100%;
+  width: 85vw;
+  z-index: -1;
+}
+  #bottomButtons {
+    position: absolute;
+    top: 40px;
+    left: 640px;
+    width: 300px;
+  }
+
+@media screen and (min-width: 1051px) {
+#bottomButtons {
+  position: absolute;
+  top: 4px;
+  left: 500px;
+  } 
+}
+
+.btn {
+    background-color: transparent;
+    -moz-box-shadow: 3px 3px 20px #919191;
+    -webkit-box-shadow: 3px 3px 20px #919191;
+    box-shadow: 3px 3px 20px #919191;
+    margin-right: 10px;
+}
+ .col-sm-10  {
+    top: 5em;
+    left: 20em;
+  }
+
+h1 {left: 50vw;}
+
+.pagination {
+  position: absolute;
+  top: 110px;
+  right: 77px;
+  color: gray;
+  z-index: 3;
+ } 
+
+@media screen and (max-width: 90em) {
+ .col-sm-10  {
+    left: 10px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+.col-sm-10  {
+    top: 200px;    
+} 
+
+h1 {font-size: 24pt;}
+#ttitle {font-size: 16pt;} 
+#columns {
+    columns: 1;
+    -webkit-columns: 1;
+    -moz-columns: 1;
+}
+
+.pagination {
+  position: absolute;
+  top: 190px;
+  right: 20px;
+}
+
+#bottomButtons {
+  position: absolute;
+  top: -48px;
+  left: -49px;
+  z-index: 4;
+  } 
+
+#uploadbutton {
+  border: none;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  color: gray;
+  }  
+}
+
+@media screen and (max-width: 800px) {
+  #bottomButtons {
+  position: absolute;
+  top: -48px;
+  left: 200px;
+  z-index: 4;
+  } 
+  body {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 1738px;
+  }
+  #blackbackground {
+  display: none;
+  }
+}
+ @media screen and (max-width: 655px) {
+  #bottomButtons {
+  position: absolute;
+  top: -72px;
+  left: 100px;
+  z-index: 4;
+  }  
+}
+ @media screen and (max-width: 400px) {
+  .btn {
+    margin-right: 0px;
+      font-size: 10pt;
+  }
+  #bottomButtons {
+  position: absolute;
+  top: -23px;
+  left: 20px;
+  z-index: 4;
+  }    
+}
+
+
+
+audio {width: 240px;}
+#home {
+    text-shadow: none;
+  }
+
+#ss {
+    text-shadow:
+    0 0 4px rgba(202,228,225,0.98),
+    0 0 2px rgba(202,228,225,0.42),
+    0 0 2px rgba(30,132,242,0.58),
+    0 0 2px rgba(30,132,242,0.84),
+    0 0 2px rgba(30,132,242,0.88),
+    0 0 2px rgba(30,132,242,1);}
+}  
+
+
+
+</style>
+</head>
+
+  <h1>The Evolution of the Seed</h1>
+
+<div id="blackbackground">
+</div>     
+    <div class="container" id="columns">
+      {% for document in object_list%}
+
+      <h2 id = 'ttitle'> {{ document.sound_file.name }} </h2>
+      <p> Created on: {{ document.created_on}} </p>
+      <p> Created by: {{ document.user }} </p>
+      <p> Comments: {{ document.comments }}</p>
+      <br>    
+      <audio controls id="player">
+        <source src="{{ document.sound_file.url }}">
+      </audio>
+      {% if user.is_authenticated %}
+      <a id = 'downloadbutton' href="{{ document.sound_file.url }}" download  class="btn btn-dark float-left">Download</a>  
+      {% endif %}
+    {% endfor %}
+  </div>
+ 
+    {% if user.is_authenticated %}
+          <div id = "bottomButtons">
+  <a id = 'uploadbutton'href="../upload" class="btn btn-dark float-left"> Upload your version</a>
+        </div>
+    {% endif %}
+{% endblock %}

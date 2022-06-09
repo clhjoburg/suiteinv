@@ -1,0 +1,49 @@
+body {
+            width: 90%;
+            /*max-width: 900px;*/
+            margin: 2em auto;
+            font: .9em/1.2 Arial, Helvetica, sans-serif;
+            /*background-color: black;*/
+            color: white;
+        }
+
+#textBox {
+  visibility: hidden;
+  position: absolute;
+  left: -300px;
+  top: -40px;
+  width: 90vw;
+  height: 80vh;
+  background-image: linear-gradient(105deg, rgba(105, 105, 105, 0.9) 39%, rgba(25, 25, 25, 0.9) 96%), url("images/backgroundtexture.jpg");
+  color: lightgray;
+  font-size: 18pt;
+  padding: 25px;
+  border-color: darkgray;
+  border-width: 4px;
+  border-radius: 0.5%;
+  overflow-y:  scroll;
+  z-index: 5;
+}
+
+/*.sidebar-nav {
+    margin-top: 7px;
+    margin-bottom: 80px;
+    /*margin-left: 40px*/ 
+/*    padding-bottom: 2em;
+    padding-left: 0.5em;
+    list-style: none;
+    font: 1.5em/1.2 Arial, Helvetica, sans-serif;
+    background-image: linear-gradient(105deg, rgba(105, 105, 105, 0.2) 39%, rgba(25, 25, 25, 0.2) 96%)
+}*/
+
+
+
+#notImageSize { 
+    width: 90%; 
+    height: auto; 
+}
+
+.h2 {
+    font: 2em/1.2 Arial, Helvetica, sans-serif;
+}
+

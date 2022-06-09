@@ -1,0 +1,56 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<head>
+    <title>Success</title>
+    {% load static %}
+  <link rel="stylesheet" href="{% static 'css/stylestwo.css' %}">    
+<style>
+   .col-sm-10  {
+    top: 5em;
+    left: 20em;
+  }
+</head>
+body {
+  font-family: 'Helvetica neue', Helvetica, Arial, sans-serif;
+  background-position: absolute;
+  background-repeat: no-repeat;
+  background-size: cover;
+      }
+
+h1 {font-size: 36pt;}
+
+p {font-size: 16pt;} 
+
+#content_container {
+  position: relative;
+  left: -200px;
+}
+
+#butt
+        {
+  background: transparent;
+  color: white;
+  border-radius: 5%;
+  border-style: solid;
+  border-width: 2px;
+  border-color: darkgray;
+  font-size: 24pt;
+  font-style: italic;
+  padding: 5px;
+        }
+
+</style>
+
+<body>
+  <div id="content_container">
+	<h1> The Headroom Project</h1>
+    <h2>email sent successfully to: {{ recepient }}</h2>
+    <br>
+    <a id="butt" href="{% url 'index'%}" role="button">
+    	Continue
+    </a>
+  </div>  
+</body>
+
+{% endblock %}

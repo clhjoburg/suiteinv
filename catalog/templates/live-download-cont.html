@@ -1,0 +1,489 @@
+{% extends "baseFour.html" %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Most recent evolution</title>
+    <style>
+      #home {
+        text-shadow: none;
+      }
+      
+      #live-download {
+        text-shadow:
+        0 0 4px rgba(202,228,225,0.98),
+        0 0 2px rgba(202,228,225,0.42),
+        0 0 2px rgba(30,132,242,0.58),
+        0 0 2px rgba(30,132,242,0.84),
+        0 0 2px rgba(30,132,242,0.88),
+        0 0 2px rgba(30,132,242,1);
+      }
+
+       .col-sm-10  {
+    top: 5em;
+    left: 20em;
+  }
+
+#comments {
+  position: absolute;
+  top: 370px;
+  left: -300px;
+  width: 285px;
+  height: 300px;
+  padding: 5px;
+  overflow: scroll;
+  font-size: 12pt;
+  -webkit-box-shadow: 3px 3px 20px #919191;
+  box-shadow: 3px 3px 20px #919191;
+  visibility: hidden;
+}
+
+#comments-button {
+  color: white;
+  background-color: rgba(29, 8, 56, 0.7);
+  width:90px;
+  height:25px;
+  position: absolute;
+  top: 240px;
+  left: -300px;
+  font-size: 8pt;
+  z-index: 3;
+}
+      #titles {
+        margin: 24px auto;
+        width: 1000px;
+        position: absolute;
+        left: -300px;
+        top: -15px;
+
+      }
+
+body {
+  font-family: 'Helvetica neue', Helvetica, Arial, sans-serif;
+  background-position: absolute;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /*height: 2000px;*/
+ 
+      }
+
+#mainTitle { visibility: visible; }
+#altTitle { visibility: hidden; }
+
+      h1 {
+        font-size: 27pt;
+      }
+
+      #offtoright {
+        position: absolute;
+        left: -300px;
+        top: 170px;
+      }
+
+      #links {
+        position: absolute;
+        left: -300px;
+        top: 230px;
+      }
+
+     #waveform-container {
+        margin: 24px auto;
+        width: 1000px;
+        /*background-color: rgba(39, 66, 97, 0.7);*/
+      }
+
+      #zoomview-container, #overview-container {
+        margin: 0 0 24px 0;
+        line-height: 0;
+        background-color: rgba(39, 66, 97, 0.7);
+        -webkit-box-shadow: 3px 3px 20px #919191;
+        box-shadow: 3px 3px 20px #919191;
+      }
+
+      #zoomview-container {
+        height: 200px;
+      }
+
+      #overview-container {
+        height: 85px;
+      }
+
+
+      #demo-controls button {
+        color: white;
+        border: 1px solid #919191;
+        border-radius: 5%;
+        cursor: pointer;
+          -webkit-box-shadow: 3px 3px 20px #919191;
+        box-shadow: 3px 3px 20px #919191;
+        background-color: rgba(39, 66, 97, 0.6);
+
+
+      }
+
+      #controls {
+        flex: 1;
+        margin-left: 1em;
+        position: relative;
+        left: -315px;
+        top: 62px;
+      }
+
+      #seek-time {
+        width: 60px;
+        height: 21px;
+        border: 1px solid #919191;
+        border-radius: 7%;
+        color: white;
+        -webkit-box-shadow: 3px 3px 20px #919191;
+        box-shadow: 3px 3px 20px #919191;
+        background-color: rgba(39, 66, 97, 0.6);
+      }
+      #downloadloadbutton {
+        margin-left: 2px;
+      }
+
+      #uploadbutton {
+        margin-left: 15px;
+      }
+
+      .log {
+        margin: 0 auto 24px auto;
+        width: 1000px;
+      }
+
+      table {
+        width: 100%;
+      }
+
+      table th {
+        text-align: left;
+      }
+
+      table th, table td {
+        padding: 0.5em;
+      }
+
+      .hide {
+        display: none;
+      }
+
+      #demo-controls, #waveform-container {
+        position: absolute;
+        top: 0px;
+        left: 400px;
+      }
+
+      #demo-controls {
+        margin: 0 auto 24px auto;
+        display: flex;
+        align-items: left;
+        width: 900px;
+        position: absolute;
+        left: 700px;
+        top: 300px;
+      }
+
+      #audio {
+        flex: 0 0 30%;
+        position: absolute;
+        left: -1000px;
+        top: -220px;
+        width: 250px;
+        z-index: 3;
+      }
+
+
+
+/* ----------------MEDIA SCREEN 1788px -------------------------------*/
+      @media screen and (max-width: 1788px) {
+
+
+     #waveform-container {
+        margin: 24px auto;
+        width: 870px;
+        left: 230px;
+        top: 50px;
+      }
+
+     #demo-controls {
+        width: 800px;
+        left: 530px;
+        top: 350px;
+      }
+
+      #audio {
+        left: -830px; 
+        top: -270px; 
+      }
+
+      }      
+/* ----------------MEDIA SCREEN 1500px -------------------------------*/
+      @media screen and (max-width: 1500px) {
+body {
+  background-size: 265vw 980px;
+  overflow-x: hidden;
+}
+
+#comments-button{
+top: 165px;
+}
+
+#comments {
+  top: 100px;
+  left: 0;
+  width: 415px;
+  height: 130px;
+  background-color: rgba(39, 66, 97, 0.7);
+}
+#downloadbutton, #uploadbutton {
+
+  font-size: 8pt;
+  height: 20px;
+  width: 120px;
+  z-index: 3;
+  background-color: rgba(29, 8, 56, 0.7);
+  padding: 0px;
+  -webkit-box-shadow: 3px 3px 20px #919191;
+  box-shadow: 3px 3px 20px #919191;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+#uploadbutton {
+  left: 130px;
+  width: 240px;
+}
+
+#titles {
+  position: absolute;
+  top: -30px;
+}
+
+h1 {
+  font-size: 18pt;
+}
+
+p {
+  font-size: 10pt;
+}
+
+#audio {
+  position: absolute;
+  left: -830px;
+  top: -310px;
+  width: 200px;
+  height: 40px;
+}
+
+#waveform-container {
+    left: -300px;
+    top: 220px;
+    width: 715px;
+}
+
+#zoomview-container {
+  height: 100px;
+}
+
+#overview-container {
+  background-color: rgba(112, 134, 207, 0.5);
+  height: 80px;
+}
+
+#controls {
+  position: absolute;
+  left: -630px;
+  top: -310px;
+  width: 600px;
+}
+#controls button {
+  font-size: 10pt;
+} 
+
+#offtoright {
+  position: absolute;
+  top: 150px;
+  left: -305px;
+  }
+}      
+
+/* ----------------MEDIA SCREEN 1280px -------------------------------*/
+      @media screen and (max-width: 1280px) {
+body {
+  background-size: 265vw 900px;
+  position: fixed;
+  overflow: hidden;
+  background-repeat: repeat;
+}
+
+#comments-button {
+ left: -210px;  
+}
+
+#comments {
+  width: 430px;
+  height: 100px;
+  background-color: rgba(39, 66, 97, 0.7);
+}
+
+#navbar {
+  top: -30px;
+  }
+
+#titles {
+  position: absolute;
+  top: -30px;
+  left:  -210px;
+}
+
+h1 {
+  font-size: 18pt;
+}
+
+p {
+  font-size: 10pt;
+}
+
+#audio {
+  position: absolute;
+  left: -740px;
+  top: -310px;
+  width: 200px;
+  height: 40px;
+}
+
+#waveform-container {
+    left: -210px;
+    top: 200px;
+    width: 640px;
+}
+
+#zoomview-container {
+  height: 100px;
+}
+
+#overview-container {
+  background-color: rgba(112, 134, 207, 0.5);
+  height: 80px;
+}
+
+#controls {
+  position: absolute;
+  left: -755px;
+  top: 100px;
+  width: 600px;
+}
+#controls button {
+  font-size: 10pt;
+} 
+#offtoright {
+  position: absolute;
+  top: 150px;
+  left: -215px;
+
+}  
+
+#links {
+  position: relative;
+  left: -225px;
+}
+
+}      
+/* ----------------MEDIA SCREEN 1000px -------------------------------*/
+      @media screen and (max-width: 1000px) {
+body {
+  background-size: 275vw 890px;
+  overflow-x: hidden;
+  height: 800px;
+  background-repeat: repeat;
+}
+
+#titles {
+  top:  115px;
+}
+
+#offtoright {
+  position: absolute;
+  top: 250px;
+}
+#links {
+  top: 300px;
+}
+
+}
+/* ----------------MEDIA SCREEN 684px -------------------------------*/
+      @media screen and (max-width: 684px) {
+body {
+  background-size: 275vw 900px;
+   background-repeat: repeat;
+  overflow-x: hidden;
+}
+
+#mainTitle { visibility: hidden; }
+#altTitle { visibility: visible; }
+
+
+
+}
+
+/* ----------------MEDIA SCREEN 684px -------------------------------*/
+      @media screen and (max-width: 684px) and (max-height:  667px) {
+#overview-container {
+  visibility: hidden;
+  }
+}
+
+/* ----------------MEDIA SCREEN 480px -------------------------------*/
+      @media screen and (max-width: 480px) {
+
+#titles {
+  left: -260px;
+  }
+
+#offtoright {
+  left: -265px;
+  }
+
+#links {
+  left: -275px;
+  }
+#uploadbutton {
+  position: relative;
+  left: 120px;
+  width:  190px;
+}  
+
+}
+
+    </style>
+  </head>
+  <body>
+    <div id="titles">
+      <h1> Ableton Evolution Download </h1>
+      <p> {{ object_list.live_render.name }} </p>
+      <p> Created on: {{ object_list.created_on}} </p>
+      <p> Created by: {{ object_list.user }} </p>
+    </div>
+    <div id = offtoright>
+  <a id = 'downloadbutton' href="{{ object_list.live_render.url }}" download  class="btn btn-dark float-left">Download stereo mix</a>  
+   <a id = 'uploadbutton'href="{% url 'live-download-cont-two' %}" class="btn btn-dark float-left"> Download Ableton project as zip file</a>
+ </div>
+<div id="links">
+   <p> If listed below, you will also need to install the following plugins/audio units for the project to play correctly: </p>
+    <a href="{{ object_list.plug_in_1 }}">{{ object_list.plug_in_1 }}</a><br>
+    <a href="{{ object_list.plug_in_2 }}">{{ object_list.plug_in_2 }}</a><br> 
+    <a href="{{ object_list.plug_in_3 }}">{{ object_list.plug_in_3 }}</a><br>
+    <a href="{{ object_list.plug_in_4 }}">{{ object_list.plug_in_4 }}</a><br>
+    <a href="{{ object_list.plug_in_5 }}">{{ object_list.plug_in_5 }}</a>
+ </div>
+
+      
+  </body>
+</html>
+
+{% endblock %}

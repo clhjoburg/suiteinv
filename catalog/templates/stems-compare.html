@@ -1,0 +1,833 @@
+{% extends "baseFour.html" %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+  {% load static %}
+  <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon"/>
+    <title>Most recent evolution</title>
+    <style>
+      
+      #home {
+        text-shadow: none;
+      }
+      
+      #current {
+        position: absolute;
+        top: 300px;
+      }
+      #stems {
+        text-shadow:
+        0 0 4px rgba(202,228,225,0.98),
+        0 0 2px rgba(202,228,225,0.42),
+        0 0 2px rgba(30,132,242,0.58),
+        0 0 2px rgba(30,132,242,0.84),
+        0 0 2px rgba(30,132,242,0.88),
+        0 0 2px rgba(30,132,242,1);
+      }
+
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+  z-index: 5;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#spinner {
+  position: relative;
+  left: 1050px;
+  top:  -270px;
+}
+
+      .col-sm-10  {
+        top: 5em;
+        left: 20em;
+      }
+
+      #audio2 {
+        position: absolute;
+        top: 170px;
+        width: 250px;
+        left: 0px;
+        z-index: 3;
+      }
+
+      #audio {
+        position: relative;
+        top: 10px;
+        left: 0px;
+        width: 250px;
+        z-index: 3;
+      }
+
+      #comments {
+      position: absolute;
+      top: 340px;
+      left: -300px;
+      width: 285px;
+      height: 300px;
+      padding: 5px;
+      overflow: scroll;
+      font-size: 12pt;
+      -webkit-box-shadow: 3px 3px 20px #919191;
+      box-shadow: 3px 3px 20px #919191;
+      visibility: hidden;
+      }
+
+      #comments-button {
+      color: white;
+      background-color: rgba(29, 8, 56, 0.7);
+      width:90px;
+      height:25px;
+      position: absolute;
+      top: 160px;
+      left: -300px;
+      font-size: 8pt;
+      z-index: 3;
+      }
+
+      #titles {
+        margin: 24px auto;
+        width: 1500px;
+        position: absolute;
+        left: 80px;
+        top: 100px;
+
+      }
+
+      p { 
+        padding-right: 10px; 
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 5px;
+        height: 40px;
+      }
+
+#titles-original, #titles-current {
+  font-size: 16pt;
+  color: beige;
+}
+        #titles-original {
+        margin: 24px auto;
+        display: flex;
+        padding: 5px;
+        width: 1500px;
+        height: 40px;
+        overflow: hidden;
+        position: absolute;
+        left: 80px;
+        top: 150px;
+
+      }
+
+        #titles-current {
+        margin: 24px auto;
+        display: flex;
+        width: 1500px;
+        height: 40px;
+        position: absolute;
+        left: 80px;
+        top: 400px;
+        color: rgba(245, 209, 132, 0.9);
+      }
+
+body {
+  font-family: 'Helvetica neue', Helvetica, Arial, sans-serif;
+  /*background-image: url("/static/css/images/tree-5803607_1920.jpg");*/  
+  background-position: absolute;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /*height: 2000px;*/
+ 
+      }
+
+      h1 {
+        font-size: 27pt;
+      }
+
+      #offtoright {
+        position: absolute;
+        left: -300px;
+        top: 200px;
+      }
+
+     #waveform-container {
+        margin: 24px auto;
+        width: 1000px;
+        /*background-color: rgba(39, 66, 97, 0.7);*/
+      }
+
+      #overview-container, #overview-container2 {
+        margin: 0 0 24px 0;
+        line-height: 0;
+        height: 130px;
+        background-color: rgba(245, 235, 203, 0.9);
+        -webkit-box-shadow: 3px 3px 20px #919191;
+        box-shadow: 3px 3px 20px #919191;
+        border-top-left-radius: 1% 5%;
+        border-bottom-right-radius: 1% 5%;
+        border-top-right-radius: 1% 5%;
+        border-bottom-left-radius: 1% 5%; 
+
+      }
+
+      #zoomview-container, #zoomview-container2 {
+        visibility: hidden;
+      }
+
+
+      /*#demo-controls button {
+        color: white;
+        border: 1px solid #919191;
+        border-radius: 5%;
+        cursor: pointer;
+          -webkit-box-shadow: 3px 3px 20px #919191;
+        box-shadow: 3px 3px 20px #919191;
+        background-color: rgba(39, 66, 97, 0.6);
+      }*/
+
+      #demo-controls {display: none;}
+
+      #controls {
+        flex: 1;
+        margin-left: 1em;
+        position: relative;
+        left: -315px;
+        top: 62px;
+      }
+
+      /*#seek-time {
+        width: 60px;
+        height: 22px;
+        border: 1px solid #919191;
+        color: white;
+        -webkit-box-shadow: 3px 3px 20px #919191;
+        box-shadow: 3px 3px 20px #919191;
+        background-color: rgba(39, 66, 97, 0.6);
+      }*/
+
+      .log {
+        margin: 0 auto 24px auto;
+        width: 1000px;
+      }
+
+      table {
+        width: 100%;
+      }
+
+      table th {
+        text-align: left;
+      }
+
+      table th, table td {
+        padding: 0.5em;
+      }
+
+      .hide {
+        display: none;
+      }
+
+
+      /*#demo-controls {
+        margin: 0 auto 24px auto;
+        width: 1000px;
+        display: flex;
+        align-items: left;
+        width: 800px;
+        position: absolute;
+        left: 700px;
+        top: 300px;
+      }*/
+
+/*      #audio {
+        position: absolute;
+        left: 400px;
+        top: 55px;
+        width: 250px;
+        z-index: 3;
+      }*/
+
+      #overview-container2 {
+        position: relative;
+        left: -0px;
+        top: 220px;
+        background-color: rgba(245, 209, 132, 0.9);
+      }
+
+      #overview-container {
+        position: relative;
+        top: 235px;
+        z-index: 3;
+      }
+
+      #uploadbutton {
+        position: absolute;
+        top: 400px;
+        left: -0px;
+        font-style: italic;
+        font-size: 18pt;
+        width: 200px;
+      }
+  
+/* ----------------MEDIA SCREEN 1500px -------------------------------*/
+      @media screen and (max-width: 1500px) {
+
+
+h1 {
+  font-size: 22pt;
+}
+
+}      
+
+/* ----------------MEDIA SCREEN 1280px -------------------------------*/
+     @media screen and (max-width: 1280px) {
+/*body {
+  background-size: 265vw 900px;
+  position: fixed;
+  overflow: hidden;
+}
+
+#comments-button {
+ left: -245px;
+ top: 130px;  
+}
+
+#comments {
+  width: 430px;
+  height: 100px;
+  left: 75px;
+  background-color: rgba(39, 66, 97, 0.7);
+}
+
+#navbar {
+  top: -30px;
+  }
+
+#downloadbutton, #uploadbutton {
+  font-size: 8pt;
+  height: 20px;
+  width: 120px;
+  z-index: 3;
+  background-color: rgba(29, 8, 56, 0.7);
+  padding: 0px;
+  -webkit-box-shadow: 3px 3px 20px #919191;
+  box-shadow: 3px 3px 20px #919191;
+  position: absolute;
+  top: -20px;
+  left: 50px;
+}
+
+#uploadbutton {
+  left: 180px;
+}
+
+#titles {
+  position: absolute;
+  top: -30px;
+  left: -245px;
+}
+
+h1 {
+  font-size: 18pt;
+}
+
+p {
+  font-size: 10pt;
+}
+
+#audio {
+  position: absolute;
+  top: 170px;
+  width: 200px;
+  height: 40px;
+  left: -780px;
+}
+
+#waveform-container {
+    left: -250px;
+    top: 200px;
+    width: 640px;
+}
+
+#zoomview-container {
+  height: 100px;
+}
+
+#overview-container {
+  background-color: rgba(112, 134, 207, 0.5);
+  height: 80px;
+}
+
+#controls {
+  position: absolute;
+  left: -470px;
+  top: -300px;
+  width: 600px;
+}
+#controls button {
+  font-size: 10pt;
+}*/ 
+    
+}
+
+/* ----------------MEDIA SCREEN 1024px -------------------------------*/
+    @media screen and (max-width: 1024px) {
+#spinner {
+  position: relative;
+  left: 100px;
+  top:  70px;
+  }
+}
+
+/* ----------------MEDIA SCREEN 1000px -------------------------------*/
+    @media screen and (max-width: 1000px) {
+body {
+  position: fixed;
+  background-size: 275vw 1024px;
+  overflow: hidden;
+}
+
+#comments-button {
+ top: 300px;
+}
+
+#comments {
+  top: 385px;
+  left: -250px;
+  height: 90px;
+  width: 535px;
+  background-color: rgba(39, 66, 97, 0.7);
+}
+
+#downloadbutton, #uploadbutton {
+  font-size: 8pt;
+  height: 20px;
+  width: 120px;
+  z-index: 3;
+  background-color: rgba(29, 8, 56, 0.7);
+  padding: 0px;
+  -webkit-box-shadow: 3px 3px 20px #919191;
+  box-shadow: 3px 3px 20px #919191;
+  position: absolute;
+  top: -112px;
+  left: 12px;
+}
+
+#uploadbutton {
+  left: 20px;
+}
+
+#titles {
+  position: absolute;
+  top: 150px;
+}
+
+h1 {
+  font-size: 18pt;
+}
+
+p {
+  font-size: 12pt;
+}
+
+#waveform-container {
+    left: -250px;
+    top: 600px;
+    width: 640px;
+}
+
+#zoomview-container {
+  height: 100px;
+}
+
+#overview-container {
+  height: 80px;
+  left: 50px;
+  top: 300px;
+}
+
+#overview-container2 {
+  height: 80px;
+  left: 50px;
+  top: 220px;
+}
+#titles {
+  top: 200px;
+  left: 48px;
+}
+#titles-original {
+  top: 250px;
+  left: 48px;
+}
+
+#titles-current {
+  top: 470px;
+  left: 48px;
+}
+
+#audio {
+  left: 50px;
+  top: 290px;
+}
+
+#audio2 {
+  left: 50px;
+  top: 330px;
+}
+
+}
+
+/* ----------------MEDIA SCREEN 848px -------------------------------*/
+      @media screen and (max-width: 848px) {
+h1 {
+  font-size: 16pt;
+}
+
+p {
+  font-size: 11pt;
+}
+
+}        
+
+/* ----------------MEDIA SCREEN 768px -------------------------------*/
+      @media screen and (max-width: 768px) {
+
+        .loader {
+  border: 8px solid #f3f3f3; /* Light grey */
+  border-top: 8px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+}
+
+#spinner {
+  position: relative;
+  left: 400px;
+  top:  215px;
+  }
+
+}
+
+/* ----------------MEDIA SCREEN 684px -------------------------------*/
+      @media screen and (max-width: 684px) {
+
+        .loader {
+  border: 8px solid #f3f3f3; /* Light grey */
+  border-top: 8px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+#spinner {
+  top: -200px;
+  left: 300px;
+  }
+
+body {
+  background-size: 275vw 800px;
+  position: fixed;
+  overflow: hidden;
+}
+
+
+#navbar {
+  top: -30px;
+}
+#downloadbutton, #uploadbutton {
+  font-size: 8pt;
+  height: 20px;
+  width: 120px;
+  z-index: 3;
+  background-color: rgba(29, 8, 56, 0.7);
+  padding: 0px;
+  -webkit-box-shadow: 3px 3px 20px #919191;
+  box-shadow: 3px 3px 20px #919191;
+  position: absolute;
+  top: -112px;
+  left: 42px;
+}
+
+#uploadbutton {
+  left: 20px;
+  top: -140px;
+}
+
+#titles {
+  position: absolute;
+  top: 180px;
+  left: 30px;
+}
+
+#titles-original, #titles-current {
+width: 360px;
+overflow: scroll;
+z-index: 3;
+left: 30px;
+}
+
+h1 {
+  font-size: 10pt;
+}
+
+p {
+  font-size: 8pt;
+}
+
+#audio, #audio2 {
+  position: absolute;
+  width: 200px;
+  height: 40px;
+}
+
+#audio {
+  top: 230px;
+}
+#audio2 {
+  top: 130px;
+}
+
+#waveform-container {
+    left: -275px;
+    top: 400px;
+    width: 340px;
+}
+
+
+#overview-container, #overview-container2 {
+  height: 80px;
+  left: 30px;
+  }
+
+}
+
+/* ----------------MEDIA SCREEN 468px -------------------------------*/
+      @media screen and (max-width: 468px) {
+
+#spinner {
+top: -185px;
+left: 270px;
+  }        
+
+h1 { 
+  font-size: 8pt; }
+
+#titles {
+  left: 10px;
+}
+
+#titles-original, #titles-current {
+width: 360px;
+overflow: scroll;
+z-index: 3;
+left: 5px;
+}
+
+p {font-size: 7pt;}
+
+#overview-container, #overview-container2 {
+  height: 60px;
+  left: 10px;
+  }
+
+#audio2 {
+  top: 110px;
+}
+
+#titles-current {
+  top: 440px;
+}
+
+#overview-container2 {
+  top: 190px;
+}
+      }
+    </style>
+  </head>
+  <body>
+  </div> 
+    <div id="titles">
+      <h1>Alam&06: Compare the original seed with the current evolution</h1>
+    </div>
+
+    <div id="titles-original">   
+      <p>Original Seed:</p>
+      <p> {{ object_list.first.mixed_render.name }} </p>
+      <p> Created on: {{ object_list.first.created_on}} </p>
+      <p> Created by: {{ object_list.first.user }} </p>
+    </div>
+    
+    <div id="titles-current">
+      <p>Current Evolution:</p>
+      <p> {{ object_list.last.mixed_render.name }} </p>
+      <p> Created on: {{ object_list.last.created_on}} </p>
+      <p> Created by: {{ object_list.last.user }} </p>
+    </div>
+
+<div id="original">
+    <div id="waveform-container">
+
+      <div id="overview-container"></div>
+    </div>
+
+      <audio id="audio" controls="controls">
+        <source src="{{ object_list.first.mixed_render.url }}" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+
+    <div id="demo-controls">
+    <!--  <audio id="audio" controls="controls">
+        <source src="TOL_6min_720p_download.mp3" type="audio/mpeg">
+        <source src="TOL_6min_720p_download.ogg" type="audio/ogg">
+        Your browser does not support the audio element.
+      </audio>-->
+
+
+
+      <div id="controls">
+        <button id = "stButt" onclick="stereo()">Show in Stereo</button>
+        <button data-action="zoom-in">Zoom in</button>
+        <button data-action="zoom-out">Zoom out</button>
+        <button data-action="add-segment">Add a Segment at current time</button>
+        <button data-action="add-point">Add a Point at current time</button>
+        <button data-action="log-data">Log segments/points</button>
+        <input type="text" id="seek-time" value="0.0">
+        <button data-action="seek">Seek</button>
+      </div>
+    </div>
+
+
+<div id="current">
+<div id="waveform-container">
+
+      <div id="overview-container2"></div>
+    </div>
+
+      <audio id="audio2" controls="controls">
+        <source src="{{ object_list.last.mixed_render.url }}" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+
+    <div id="demo-controls">
+    <!--  <audio id="audio" controls="controls">
+        <source src="TOL_6min_720p_download.mp3" type="audio/mpeg">
+        <source src="TOL_6min_720p_download.ogg" type="audio/ogg">
+        Your browser does not support the audio element.
+      </audio>-->
+
+      <div id="controls">
+        <button id = "stButt" onclick="stereo()">Show in Stereo</button>
+        <button data-action="zoom-in">Zoom in</button>
+        <button data-action="zoom-out">Zoom out</button>
+        <button data-action="add-segment">Add a Segment at current time</button>
+        <button data-action="add-point">Add a Point at current time</button>
+        <button data-action="log-data">Log segments/points</button>
+        <input type="text" id="seek-time" value="0.0">
+        <button data-action="seek">Seek</button>
+      </div>
+    </div>
+
+       <div id="spinner" class="loader"></div> 
+
+   <a id = 'uploadbutton'href="{% url 'stems-download' %}" class="btn btn-dark float-left">Back</a>
+
+
+      {% load static %}
+  <script src="{% static 'peaks-js-master/demo/peaks.js' %}"></script>
+
+    <!--<script src="peaks.js"></script>-->
+    <script>
+
+      
+ function tracks() {
+      (function(Peaks) {
+
+        var AudioContext = window.AudioContext || window.webkitAudioContext;
+        var audioContext = new AudioContext();
+
+        var audioElement = document.getElementById('audio');
+
+        var options = {
+          containers: {
+            zoomview: document.getElementById('zoomview-container'),
+            overview: document.getElementById('overview-container')
+          },
+          mediaElement: audioElement,
+          webAudio: {
+            audioContext: audioContext,
+            scale: 128,
+            multiChannel: false,
+          },
+          keyboard: true,
+          pointMarkerColor: '#006eb0',
+          showPlayheadTime: true,
+          zoomLevels: [128, 256, 512, 1024, 2048, 4096]
+        };
+
+        Peaks.init(options, function(err, peaksInstance) {
+          if (err) {
+            console.error(err.message);
+            return;
+          }
+
+          console.log('Peaks instance ready');
+        });
+      })(peaks);
+    }
+    tracks();
+
+function tracks2() {
+      (function(Peaks) {
+
+        var AudioContext = window.AudioContext || window.webkitAudioContext;
+        var audioContext = new AudioContext();
+
+        var audioElement = document.getElementById('audio2');
+
+        var options = {
+          containers: {
+            zoomview: document.getElementById('zoomview-container2'),
+            overview: document.getElementById('overview-container2')
+          },
+          mediaElement: audioElement,
+          webAudio: {
+            audioContext: audioContext,
+            scale: 128,
+            multiChannel: false,
+          },
+          keyboard: true,
+          showPlayheadTime: true,
+          zoomLevels: [128, 256, 512, 1024, 2048, 4096]
+        };
+
+        Peaks.init(options, function(err, peaksInstance) {
+          if (err) {
+            console.error(err.message);
+            return;
+          }
+
+          console.log('Peaks instance ready');
+          var sp = document.getElementById("spinner");
+          sp.style.visibility = "hidden";
+        });
+      })(peaks);
+    }
+    tracks2();
+
+
+
+    </script>
+  </body>
+</html>
+
+{% endblock %}

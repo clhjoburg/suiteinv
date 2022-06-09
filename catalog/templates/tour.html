@@ -1,0 +1,116 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<head>
+
+         <title>Cameron Harris</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Catamaran&display=swap" rel="stylesheet"> 
+           {% load static %}
+  <!--<link rel="stylesheet" href="{% static 'css/styles.css' %}">-->
+
+            <style>
+  /* Style the video: 100% width and height to cover the entire window */
+#myVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: -1;
+}
+.album {
+  box-shadow: 5px 10px 8px #888888;
+}
+
+#alison {
+}
+
+p {
+  text-shadow: 2px 2px 4px black;
+}
+
+.col-sm-10  {
+  top: 5em;
+  left: 20em;
+  }
+
+#columns {
+  z-index: 3;
+}
+
+#headroom-breaks {visibility: hidden;}
+
+/* Add some content at the bottom of the video/page */
+.content {
+  position: absolute;
+  top: -40px;
+  left: -130px;
+  /*background: rgba(0, 0, 0, 0.5);*/
+  color: #f1f1f1;
+  width: 100%;
+  padding: 20px;
+}
+
+#home {text-shadow: 2px 2px 4px black;}
+
+#works {    
+    text-shadow:
+    0 0 4px rgba(202,228,225,0.98),
+    0 0 2px rgba(202,228,225,0.42),
+    0 0 2px rgba(30,132,242,0.58),
+    0 0 2px rgba(30,132,242,0.84),
+    0 0 2px rgba(30,132,242,0.88),
+    0 0 2px rgba(30,132,242,1);
+  }  
+
+h1, h2{
+  font-family: 'Catamaran', sans-serif;
+  font-size: 48pt;
+  color: rgba(64, 168, 247, 0.65);
+  text-shadow: 2px 2px 4px black;
+  z-index: 3;
+}
+
+@media screen and (max-width: 1578px) {
+   .col-sm-10  {
+    left: 30px;
+  }
+}  
+
+@media screen and (max-width: 1002px) {
+   .col-sm-10  {
+   top: 200px;
+   }
+}  
+    </style>     
+
+</head>
+<body>
+  <!-- The video -->
+<video autoplay muted loop id="myVideo">
+<!--<video autoplay muted playsinline data-wf-ignore="true" data-object-fit="cover" loop id="myVideo">-->
+  <source src="/static/css/images/dandRain.mp4" type="video/mp4">
+</video>
+
+
+
+<div id = "big-container">
+  <h1 id="heading">Take a tour of the Headroom Project</h1>
+    {% for document in object_list%}
+
+      <p> {{ document.tour |safe}} </p>
+    {% endfor %}
+  </div>
+   <a id = 'backButton'href="{% url 'index' %}" class="btn btn-dark float-left">Back</a>
+</body>
+
+<script>
+var video = document.getElementById("myVideo");
+
+video.playbackRate = 0.35; 
+
+</script>
+
+{% endblock %}
