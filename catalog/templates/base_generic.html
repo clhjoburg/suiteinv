@@ -279,6 +279,47 @@ audio::-webkit-media-controls-panel {
 <body>
 
 
+      <div id = "navbar">
+        <nav>
+          <ul>
+            <li id = "home"><a href="{% url 'index'%}">Home</a></li>             
+          <li class = "full-text" id = "ss"><a href="{% url 'sound-seed'%}">Gigu03<br>evolution</a></li>
+          <li class = "short-text" id= "ss"><a href="{% url 'sound-seed'%}">Gigu03</a></li>     
+          <li class = "noBreaks" id= "ss"><a href="{% url 'sound-seed'%}">Gigu03 evolution</a></li>
+          <li class = "full-text" id= "ableton"><a href="{% url 'live-seed-history'%}">Sarab&03<br>evolution</a></li>
+          <li class = "short-text" id= "ableton"><a href="{% url 'live-seed-history'%}">Sarab&03</a></li>
+          <li class = "noBreaks" id= "ableton"><a href="{% url 'live-seed-history'%}">Sarab&03 evolution</a></li>          
+          <li class = "full-text" id = "stems"><a href="{% url 'stem-seed-history'%}">Alam&06<br>evolution</a></li>
+          <li class = "short-text" id = "stems"><a href="{% url 'stem-seed-history'%}">Alam06</a></li>
+          <li class = "noBreaks" id = "stems"><a href="{% url 'stem-seed-history'%}">Alam06 evolution</a></li>
+
+
+      {% if perms.catalog.can_mark_returned %}    
+      {% endif %}      
+      {% if user.is_authenticated %}
+
+          <li class = "full-text" id ="stereo-download"><a href="{% url 'download-file'%}">Most recent evolution <br>Gigu03</a></li>
+          <li class = "short-text" id ="stereo-download"><a href="{% url 'download-file'%}">Most recent<br>Gigu03</a></li>
+          <li class = "noBreaks" id ="stereo-download"><a href="{% url 'download-file'%}">Most recent evolution Gigu03</a></li>
+          <li class = "full-text" id = "live-download"><a href="{% url 'live-download'%}">Most recent evolution <br>Sarab&03</a></li>
+          <li class = "short-text" id = "live-download"><a href="{% url 'live-download'%}">Most recent<br>Sarab&03</a></li>
+          <li class = "noBreaks" id = "live-download"><a href="{% url 'live-download'%}">Most recent evolution Sarab&03</a></li>        
+          <li class = "full-text" id = "stems-download"><a href="{% url 'stems-download'%}">Most recent evolution <br> Alam06</a></li>
+          <li class = "short-text" id = "stems-download"><a href="{% url 'stems-download'%}">Most recent<br>Alam06</a></li> 
+          <li class = "noBreaks" id = "stems-download"><a href="{% url 'stems-download'%}">Most recent evolution Alam06</a></li>         
+          <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
+      {% else %}
+          <li><a href="{% url 'signup'%}">Register</a></li>
+          <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
+      {% endif %} 
+      {% if user.is_authenticated %}
+          <li class = "full-text">User: {{ user.get_username }}</li>
+          <li class = "short-text">User:<br> {{ user.get_username }}</li> 
+          <li class = "noBreaks">User: {{ user.get_username }}</li>        
+      {% endif %}     
+          </ul>
+        </nav>
+      </div>
 
   <div class="container-fluid" id=topDiv>
     <div class="row">
@@ -310,6 +351,7 @@ audio::-webkit-media-controls-panel {
     <a href="https://cameronlharris.com/clh" class="active">Cameron Harris</a>
     <a href="https://son0-morph.co.uk/" class="active">Jonathan Crossley</a>
     <a href="https://cameronlharris.com">Headroom main project</a>
+    <a href="{% url 'contact' %}" id ="contact">Contact</a>
 </div> 
 
 	<div id="hamburger_close" onclick="hideMenu();">

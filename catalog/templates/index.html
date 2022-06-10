@@ -103,26 +103,6 @@ text-align: center;
   font-style: italic;
 }
 
-#tourButton {
-  background: transparent;
-  color: white;
-  border-radius: 5%;
-  border-style: solid;
-  border-width: 2px;
-  border-color: darkgray;
-  font-size: 18pt;
-  z-index: 3;
-  position: absolute;
-  top: 310px;
-  left: 600px;
-  opacity: 0;
-  transition: 3s opacity;
-  font-style: italic;
-  padding-left: 5px;
-  padding-right: 5px;
-} 
-
-
 #textButton {
   background: transparent;
   color: white;
@@ -205,10 +185,6 @@ and (max-width: 1760px) {
     width:  150px;
   }
 
-  #tourButton {
-  top:  400px;
-  }
-
     #bigContainer {
     position: relative;
     right: 200px;
@@ -223,7 +199,7 @@ and (max-width: 1530px) {
     right: 400px;
     text-shadow: 2px 2px 4px #000000;
     }
-  #skipButton, #textButton, #tourButton  {
+  #skipButton, #textButton, {
     text-shadow: 2px 2px 4px #000000;
     box-shadow: 2px 2px 4px #000000;
     }
@@ -235,10 +211,6 @@ and (max-width: 1450px) {
     #skipButton, #textButton, #subscribeButton {
     position: absolute;
     top: 430px;
-  }
-
-  #tourButton {
-  top:  480px;
   }
 
   #headTitle {
@@ -269,10 +241,7 @@ and (max-width: 1242px) {
 #subscribeButton {
   width: 350px;
 }
-  #tourButton {
-  top:  530px;
-  width: 150px;
-  }
+
 }
 
 /*-----------------MEDIA SCREEN 1048PX ---------------------*/
@@ -300,7 +269,7 @@ left: 650px;
   #subscribeButton {
   left: 760px;
 }
-  #textButton, #tourButton {
+  #textButton, {
   left: 650px;
   }
 
@@ -347,7 +316,7 @@ and (max-width: 824px) {
     left: 700px;
     top: 0px;
   }
-  #textButton, #tourButton {
+  #textButton, {
     left: 700px;
   }
   #subscribeButton {
@@ -434,23 +403,15 @@ and (max-width: 375px) {
   #textButton, #subscribeButton {
     top: 430px;
   }
-
-  #tourButton {
-  top:  480px;
-  }
 }
 
 @media only screen
 and (max-height: 640px) {
-  #tourButton {
-    left: 800px;
-    top: 470px;
-  }
 }
 
 @media only screen
 and (max-height: 740px) {
-  #tourButton, #subscribeButton, #textButton {
+  #subscribeButton, #textButton {
 z-index: 0;
   }
 }
@@ -486,6 +447,7 @@ z-index: 0;
 
 <button id="skipButton" onclick="makeItGoAway()">Skip Intro</button>
 <button id="textButton" onclick="viewText()">Re-read</button>
+<a id="subscribeButton" href="{% url 'subscribe'%}">Create an account</a>
 <div id="fade-container">
     <p class = "fades" id = "para1">The Headroom Project is a new take on creating music collaboratively: Musical seeds are planted in the system and all are welcome to grow these seeds by evolving the music seed further.</p>
 
@@ -544,7 +506,6 @@ var text = document.getElementById("textButton");
 var textDiv = document.getElementById("textBox"); 
 var closeDiv = document.getElementById("closeButton");
 var sub = document.getElementById("subscribeButton");
-var tour = document.getElementById("tourButton");
 var saffy = document.getElementById("safariBox");          
 
 
@@ -611,7 +572,6 @@ function enterAfterTwelve() {
   initTitle.style.opacity = '0';
   skip.style.opacity = '0';
   sub.style.opacity = '1';
-  tour.style.opacity = '0';
   navbar.style.visibility = 'visible';
   navbar.style.opacity = '1';
 }
@@ -626,7 +586,6 @@ function makeItGoAway() {
   text.innerHTML ="Read";
   text.style.opacity = '1';
   sub.style.opacity = '1';
-  tour.style.opacity = '1';
   initTitle.style.opacity = '0';
 
 }
