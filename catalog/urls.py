@@ -4,21 +4,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import include
 from django.conf.urls import url
-#from catalog import views as catalog_views
+from catalog import views as catalog_views
 from django.contrib.auth.views import (
     LoginView,
     LogoutView,
 )
-
-urlpatterns = [
-    path('', views.index, name='index'), 
-    path('upload/', views.SoundUploadView.as_view(), name='upload-file'),
-    path('download/', views.SoundDownloadView.as_view(), name='download-file'),
-    path('seed/', views.SoundSeedView.as_view(), name='sound-seed'),      
-
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-'''
 
 urlpatterns = [
 	path('', views.index, name='index'),
@@ -44,11 +34,8 @@ urlpatterns = [
     path('live-compare-two', views.LiveComparisonTwoView.as_view(), name='live-compare-two'),
     path('live-download-cont', views.Live2DownloadView.as_view(), name='live-download-cont'),
     path('live-download-cont-two', views.LiveDownloadViewTwo.as_view(), name='live-download-cont-two'),    
-    path('tour', views.TourView.as_view(), name='tour'),
     path('signed-url/', views.SignedURLView.as_view(), name='signed-url'),
     path('live-upload-cont', views.LiveUploadViewTwo.as_view(), name='live-upload-cont'),               
     url(r'^signup/$', catalog_views.signup, name='signup'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-'''

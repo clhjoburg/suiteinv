@@ -1,6 +1,5 @@
 from django.shortcuts import render
-from catalog.models import sound
-#from catalog.models import sound, live, livelarge, stem, emaillist, contact, tourinput, cameronbio 
+from catalog.models import sound, live, livelarge, stem, emaillist, contact
 from django_countries import countries
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
@@ -22,7 +21,7 @@ from django.core.mail import send_mail
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from catalog.forms import Upload
-#from catalog.forms import Upload, StemUpload, LiveUpload, ContactUpload
+from catalog.forms import Upload, StemUpload, LiveUpload, ContactUpload
 from django.views.generic.edit import FormView
 from django.template import RequestContext
 import json
@@ -52,7 +51,6 @@ class SignedURLView(generic.View):
         )
         return JsonResponse({"url": url})
 
-'''
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -67,7 +65,6 @@ def signup(request):
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
 
-'''
 def index(request):
     # Number of visits to this view, as counted in the session variable.
     num_visits = request.session.get('num_visits', 1)
@@ -105,8 +102,6 @@ class SoundDownloadView(generic.ListView):
     def get_queryset(self):
         return sound.objects.first()
 
-'''        
-
 class SoundComparisonView(generic.ListView):
 
     model = sound
@@ -128,14 +123,13 @@ class SoundComparisonTwoView(generic.ListView):
 
     def get_queryset(self):
         return sound.objects
-'''
+
 class SoundSeedView(generic.ListView):
 
     model = sound
     fields = ['sound_file']
     template_name = 'seed_history.html'
     paginate_by = 6
-'''
 
 class StemUploadView(LoginRequiredMixin, FormView):
     model = stem
@@ -314,15 +308,3 @@ class ContactView(generic.FormView):
         msg.attach_alternative(msg_html, "text/html")
         msg.send()
         return super().form_valid(form)
-
-class TourView(generic.ListView):
-
-    model = tourinput
-    template_name = 'tour.html'  
-
-class camby(generic.ListView):
-
-    model = cameronbio
-    fields = '__all__'
-    template_name = 'cameron.html'      
-    '''
