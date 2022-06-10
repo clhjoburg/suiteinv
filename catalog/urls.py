@@ -11,15 +11,14 @@ from django.contrib.auth.views import (
 )
 
 urlpatterns = [
-    path('', views.index, name='index'),
-
-] 
-'''   
+    path('', views.index, name='index'), 
     path('upload/', views.SoundUploadView.as_view(), name='upload-file'),
     path('download/', views.SoundDownloadView.as_view(), name='download-file'),
     path('seed/', views.SoundSeedView.as_view(), name='sound-seed'),      
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+'''
 
 urlpatterns = [
 	path('', views.index, name='index'),

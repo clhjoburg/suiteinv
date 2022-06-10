@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from catalog.models import sound
 #from catalog.models import sound, live, livelarge, stem, emaillist, contact, tourinput, cameronbio 
 from django_countries import countries
 from django.contrib.auth import login, authenticate
@@ -20,6 +21,7 @@ from hroom.settings import EMAIL_HOST_USER
 from django.core.mail import send_mail
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
+from catalog.forms import Upload
 #from catalog.forms import Upload, StemUpload, LiveUpload, ContactUpload
 from django.views.generic.edit import FormView
 from django.template import RequestContext
@@ -78,7 +80,7 @@ def index(request):
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'index.html', context=context)
     #return HttpResponseRedirect('/login')
-'''
+
 
 class SoundUploadView(LoginRequiredMixin, FormView):
     model = sound
@@ -103,6 +105,8 @@ class SoundDownloadView(generic.ListView):
     def get_queryset(self):
         return sound.objects.first()
 
+'''        
+
 class SoundComparisonView(generic.ListView):
 
     model = sound
@@ -124,13 +128,14 @@ class SoundComparisonTwoView(generic.ListView):
 
     def get_queryset(self):
         return sound.objects
-
+'''
 class SoundSeedView(generic.ListView):
 
     model = sound
     fields = ['sound_file']
     template_name = 'seed_history.html'
     paginate_by = 6
+'''
 
 class StemUploadView(LoginRequiredMixin, FormView):
     model = stem

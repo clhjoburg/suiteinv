@@ -2,12 +2,12 @@
 from django import forms
 
 # import GeeksModel from models.py
+from catalog.models import sound
 #from catalog.models import sound, stem, live, contact
-
 from django.forms import FileInput
 
 # create a ModelForm
-'''
+
 class Upload(forms.ModelForm):
 	# specify the name of model to use
 	class Meta:
@@ -16,7 +16,7 @@ class Upload(forms.ModelForm):
 		exclude = ["user"]
 		fields = ['sound_file', 'comments',]
 		#fields = "__all__"
-
+'''
 class StemUpload(forms.ModelForm):
 	# specify the name of model to use
 	class Meta:
