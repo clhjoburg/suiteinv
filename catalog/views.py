@@ -28,7 +28,7 @@ import boto3
 from django.conf import settings
 from django.http import JsonResponse
 
-'''
+
 class SignedURLView(generic.View):
     def post(self, request, *args, **kwargs):
         session = boto3.session.Session()
@@ -50,6 +50,7 @@ class SignedURLView(generic.View):
         )
         return JsonResponse({"url": url})
 
+'''
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -64,6 +65,7 @@ def signup(request):
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
 
+'''
 def index(request):
     # Number of visits to this view, as counted in the session variable.
     num_visits = request.session.get('num_visits', 1)
@@ -76,7 +78,7 @@ def index(request):
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'index.html', context=context)
     #return HttpResponseRedirect('/login')
-  
+'''
 
 class SoundUploadView(LoginRequiredMixin, FormView):
     model = sound
